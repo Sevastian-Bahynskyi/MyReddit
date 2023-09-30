@@ -1,0 +1,11 @@
+{
+  "Users": [
+    {
+      "Id": 1,
+      "Username": "Sevastian",
+      "Password": "password_test"
+    }
+  ],
+  "Posts": [],
+  "Comments": []
+}
