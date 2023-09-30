@@ -36,6 +36,6 @@ public class PostFileDao : IPostDao
 
     public Task<Post?> GetAsync(int ownerId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(context.Posts.FirstOrDefault(p => p.Owner.Id == ownerId));
     }
 }

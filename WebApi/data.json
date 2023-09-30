@@ -6,6 +6,13 @@
       "Password": "password_test"
     }
   ],
-  "Posts": [],
+  "Posts": [
+    {
+      "Id": 1,
+      "Owner": null,
+      "Title": "My post",
+      "Description": "Description...................."
+    }
+  ],
   "Comments": []
 }

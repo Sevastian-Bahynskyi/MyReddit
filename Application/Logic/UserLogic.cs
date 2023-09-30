@@ -19,7 +19,7 @@ public class UserLogic: IUserLogic
     
     public async Task<User> CreateAsync(UserRegistrationDto registrationDto)
     {
-        User? existing = await userDao.GetAsync(registrationDto.Username);
+        User? existing = await userDao.GetByUsernameAsync(registrationDto.Username);
         if (existing is not null)
             throw new Exception($"User with username {existing.Username} already exists");
             
