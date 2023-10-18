@@ -37,3 +37,4 @@ D:\RiderProjects\MyReddit\MyReddit\WebApi\obj\Debug\net7.0\refint\WebApi.dll
 D:\RiderProjects\MyReddit\MyReddit\WebApi\obj\Debug\net7.0\WebApi.pdb
 D:\RiderProjects\MyReddit\MyReddit\WebApi\obj\Debug\net7.0\WebApi.genruntimeconfig.cache
 D:\RiderProjects\MyReddit\MyReddit\WebApi\obj\Debug\net7.0\ref\WebApi.dll
+D:\RiderProjects\MyReddit\MyReddit\WebApi\bin\Debug\net7.0\data.json

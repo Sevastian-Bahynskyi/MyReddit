@@ -27,7 +27,7 @@ public class PostLogic : IPostLogic
             throw new Exception($"User with id {creationDto.OwnerId} doesn't exist.");
         
         
-        Post? existing = await postDao.GetAsync(creationDto.OwnerId);
+        Post? existing = await postDao.GetAsync(creationDto.Title, creationDto.OwnerId);
         if (existing is not null)
             throw new Exception($"{existing.Owner.Username} already published post with title: {existing.Title}");
         
@@ -36,15 +36,17 @@ public class PostLogic : IPostLogic
         Post post = new Post()
         {
             Title = creationDto.Title,
-            Description = creationDto.Description
+            Owner = existingUser,
+            Description = creationDto.Description,
+            CreatedAt = DateTime.Now
         };
 
         return await postDao.CreateAsync(post);
     }
 
-    public Task<ICollection<Post>> GetAsync(SearchPostParametersDto searchDto)
+    public async Task<ICollection<Post>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await postDao.GetAllAsync();
     }
 
     public Task<ICollection<Comment>> GetCommentsAsync()

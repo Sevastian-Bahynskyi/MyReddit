@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Application.LogicInterfaces;
 using Domain.Models;
 
@@ -29,13 +30,14 @@ public class PostFileDao : IPostDao
         return Task.FromResult(post);
     }
 
-    public Task<ICollection<Post>> GetByTitleAsync(string titleContains)
+    public Task<ICollection<Post>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        ICollection<Post> postList = context.Posts.OrderByDescending(p => p.CreatedAt).ToList();
+        return Task.FromResult(postList);
     }
 
-    public Task<Post?> GetAsync(int ownerId)
+    public Task<Post?> GetAsync(string postTitle, int ownerId)
     {
-        return Task.FromResult(context.Posts.FirstOrDefault(p => p.Owner.Id == ownerId));
+        return Task.FromResult(context.Posts.FirstOrDefault(p => p.Title.Equals(postTitle) && p.Owner.Id == ownerId));
     }
 }

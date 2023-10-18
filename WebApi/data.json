@@ -9,9 +9,36 @@
   "Posts": [
     {
       "Id": 1,
-      "Owner": null,
-      "Title": "My post",
-      "Description": "Description...................."
+      "Owner": {
+        "Id": 1,
+        "Username": "Sevastian",
+        "Password": "password_test"
+      },
+      "Title": "Bla-bla-bla",
+      "Description": "No description, lol",
+      "CreatedAt": "2023-10-02T14:47:37.5064559+02:00"
+    },
+    {
+      "Id": 2,
+      "Owner": {
+        "Id": 1,
+        "Username": "Sevastian",
+        "Password": "password_test"
+      },
+      "Title": "Bla-bla-blo",
+      "Description": "No description, lol",
+      "CreatedAt": "2023-10-02T14:47:37.5128149+02:00"
+    },
+    {
+      "Id": 3,
+      "Owner": {
+        "Id": 1,
+        "Username": "Sevastian",
+        "Password": "password_test"
+      },
+      "Title": "New post",
+      "Description": "Bla-bla-bla",
+      "CreatedAt": "2023-10-02T14:55:07.6518698+02:00"
     }
   ],
   "Comments": []

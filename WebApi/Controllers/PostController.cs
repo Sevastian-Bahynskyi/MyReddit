@@ -22,7 +22,22 @@ public class PostController : ControllerBase
         try
         {
             Post post = await logic.CreateAsync(creationDto);
-            return Created($"/post/{post.Id}", post);
+            return Created($"/post/{post.Owner}/{post.Title}", post);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<Post>> GetAsync()
+    {
+        try
+        {
+            var postList = await logic.GetAllAsync();
+            return Ok(postList);
         }
         catch (Exception e)
         {
