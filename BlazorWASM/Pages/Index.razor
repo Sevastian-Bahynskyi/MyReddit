@@ -1,4 +1,76 @@
 ﻿@page "/"
+@using Domain.DTOs
+@using HttpClients.ClientInterfaces
 
-<PageTitle>Home</PageTitle>
+@inject IUserAuthService authService
+@inject NavigationManager navManager
+
+
+<AuthorizeView>
+    <Authorized>
+    </Authorized>
+    <NotAuthorized>
+        <div class="card">
+            <div class="field">
+                <div class="wrap-input">
+                    <input type="email" placeholder="Email"/>
+                    <span class="symbol-input">
+                        <i class="oi oi-envelope-closed" aria-hidden="true">
+                            ::before
+                        </i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private string? username;
+    private string? email;
+    private string? password;
+    private string erroMsg;
+    private bool isLoginView;
+
+    private async Task LoginAsync()
+    {
+        erroMsg = "";
+        try
+        {
+            HandleEmptyFields();
+            await authService.LoginAsync(new UserLoginDto(email!, password!));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            erroMsg = e.Message;
+        }
+    }
+
+    private void HandleEmptyFields()
+    {
+        string msg = "";
+        int emptyFieldsCounter = 0;
+        if (string.IsNullOrEmpty(email))
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Email" : ", email";
+            emptyFieldsCounter++;
+        }
+
+        if (string.IsNullOrEmpty(password))
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Password" : ", password";
+            emptyFieldsCounter++;
+        }
+
+        if (string.IsNullOrEmpty(username) && !isLoginView)
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Username" : ", username";
+            emptyFieldsCounter++;
+        }
+
+        if (!string.IsNullOrEmpty(msg))
+            throw new Exception(emptyFieldsCounter > 1 ? $"{msg} fields are empty." : $"{msg} field is empty.");
+    }
+}
 @* Todo: write home page for reddit *@

@@ -1,7 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using Application.LogicInterfaces;
 using Domain.DTOs;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi.Controllers;
 
@@ -9,26 +13,78 @@ namespace WebApi.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
+    private readonly IConfiguration config;
     private readonly IUserLogic logic;
 
-    public UserController(IUserLogic userLogic)
+    public UserController(IConfiguration config, IUserLogic logic)
     {
-        logic = userLogic;
+        this.config = config;
+        this.logic = logic;
     }
 
+    private List<Claim> GenerateClaims(User user)
+    {
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, config["Jwt:Subject"]),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.IsNormalUser()? "user" : "admin"),
+            new Claim("Email", user.Email),
+        };
 
-    [HttpPost]
-    public async Task<ActionResult<User>> CreateAsync([FromBody] UserRegistrationDto registrationDto)
+        return claims.ToList();
+    }
+
+    private string GenerateJwt(User user)
+    {
+        List<Claim> claims = GenerateClaims(user);
+
+        SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]));
+        SigningCredentials signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
+
+        JwtHeader header = new JwtHeader(signIn);
+
+        JwtPayload payload = new JwtPayload(
+            config["Jwt:Issuer"],
+            config["Jwt:Audience"],
+            claims,
+            null,
+            DateTime.UtcNow.AddMinutes(60));
+
+        JwtSecurityToken token = new JwtSecurityToken(header, payload);
+
+        string serializedToken = new JwtSecurityTokenHandler().WriteToken(token);
+        return serializedToken;
+    }
+
+    [HttpPost, Route("register")]
+    public async Task<ActionResult<User>> Register([FromBody] UserRegistrationDto registrationDto)
     {
         try
         {
-            User user = await logic.CreateAsync(registrationDto);
+            User user = await logic.RegisterAsync(registrationDto);
             return Created($"/user/{user.Id}", user);
         }
         catch (Exception e)
         {
-            return StatusCode(500, e.Message);
+            return BadRequest(e.Message);
         }
     }
     
+    [HttpPost, Route("login")]
+    public async Task<ActionResult> Login([FromBody] UserLoginDto loginDto)
+    {
+        try
+        {
+            User user = await logic.LoginAsync(loginDto);
+            string token = GenerateJwt(user);
+            return Ok(user);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }
