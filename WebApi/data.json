@@ -5,6 +5,42 @@
       "Email": "dummy1@gmail.com",
       "Username": "Sevastian",
       "Password": "password_test"
+    },
+    {
+      "Id": 2,
+      "Email": "dummyM@gmail.com",
+      "Username": "Michael",
+      "Password": "passwordM"
+    },
+    {
+      "Id": 3,
+      "Email": "dummyD@gmail.com",
+      "Username": "Dani",
+      "Password": "passwordD"
+    },
+    {
+      "Id": 6,
+      "Email": "someemail@gmail.com",
+      "Username": "Emanuel",
+      "Password": "passwordE"
+    },
+    {
+      "Id": 7,
+      "Email": "dummyC@gmail.com",
+      "Username": "Coach",
+      "Password": "passwordC"
+    },
+    {
+      "Id": 8,
+      "Email": "dummyE@gmail.com",
+      "Username": "Emanuel",
+      "Password": "passwordE"
+    },
+    {
+      "Id": 9,
+      "Email": "sblkethbeb@gmail.com",
+      "Username": "bnseogb",
+      "Password": "eargegheheh5h"
     }
   ],
   "Posts": [

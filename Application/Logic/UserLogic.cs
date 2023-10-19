@@ -33,9 +33,11 @@ public class UserLogic: IUserLogic
 
     public async Task<User> RegisterAsync(UserRegistrationDto registrationDto)
     {
-        User? existing = await userDao.GetByEmailAsync(registrationDto.Username);
+        User? existing = await userDao.GetByEmailAsync(registrationDto.Email);
         if (existing is not null)
-            throw new Exception($"User with username {existing.Username} already exists");
+        {
+            throw new Exception($"User with email {existing.Email} already exists");
+        }
             
         ValidateUserInput(registrationDto.Email, registrationDto.Username, registrationDto.Password);
         User user = new User()

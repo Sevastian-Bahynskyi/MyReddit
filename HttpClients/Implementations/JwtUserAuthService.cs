@@ -9,10 +9,15 @@ namespace HttpClients.Implementations;
 
 public class JwtUserAuthService : IUserAuthService
 {
-    private readonly HttpClient client = new();
+    private readonly HttpClient client;
     public static string? Jwt { get; private set; }
     private readonly string START_URI = "/user";
     public Action<ClaimsPrincipal> OnAuthStateChanged { get; set; } = null!;
+
+    public JwtUserAuthService(HttpClient client)
+    {
+        this.client = client;
+    }
     
     public async Task LoginAsync(UserLoginDto loginDto)
     {
@@ -40,12 +45,19 @@ public class JwtUserAuthService : IUserAuthService
     public async Task RegisterAsync(UserRegistrationDto registrationDto)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/register", registrationDto);
+        //this line is not reached, on the server side everything is perfect
         string responseContent = await responseMessage.Content.ReadAsStringAsync();
 
         if (!responseMessage.IsSuccessStatusCode)
         {
             throw new Exception(responseContent);
         }
+        
+        Jwt = responseContent;
+
+        ClaimsPrincipal principal = CreateClaimsPrincipal();
+        
+        OnAuthStateChanged.Invoke(principal);
     }
 
     public Task<ClaimsPrincipal> GetAuthAsync()

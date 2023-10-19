@@ -32,6 +32,7 @@ public class UserController : ControllerBase
             new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Role, user.IsNormalUser()? "user" : "admin"),
             new Claim("Email", user.Email),
+            new Claim("Password", user.Password)
         };
 
         return claims.ToList();
@@ -60,12 +61,13 @@ public class UserController : ControllerBase
     }
 
     [HttpPost, Route("register")]
-    public async Task<ActionResult<User>> Register([FromBody] UserRegistrationDto registrationDto)
+    public async Task<ActionResult> Register([FromBody] UserRegistrationDto registrationDto)
     {
         try
         {
             User user = await logic.RegisterAsync(registrationDto);
-            return Created($"/user/{user.Id}", user);
+            string token = GenerateJwt(user);
+            return Ok(token);
         }
         catch (Exception e)
         {
@@ -80,7 +82,7 @@ public class UserController : ControllerBase
         {
             User user = await logic.LoginAsync(loginDto);
             string token = GenerateJwt(user);
-            return Ok(user);
+            return Ok(token);
         }
         catch (Exception e)
         {

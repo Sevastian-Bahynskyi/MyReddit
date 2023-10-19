@@ -1,0 +1,90 @@
+/*vars*/
+*{
+    --main-color: rgba(87,184,70,.8);
+    --secondary-color: #e5e5e5;
+}
+
+.card{
+    font-size: 16px;
+}
+
+.symbol-input{
+    position: absolute;
+    margin: 5px;
+    margin-left: 20px;
+}
+
+.field{
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+}
+
+input{
+    display: block;
+    padding: 5px 5px 5px 55px;
+    outline: none;
+    width: 100%;
+    border-radius: 25px;
+    border: 0;
+    background-color: var(--secondary-color);
+    transition: .5s;
+}
+
+.focus-input{
+    display: block;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0;
+    color: var(--main-color);
+}
+
+input:focus +.focus-input{
+    animation: neon-fade-in .5s ease-in-out forwards;
+}
+
+input:focus+.focus-input+.symbol-input {
+    color: var(--main-color);
+    transition: transform .5s;
+    transform: translateX(-5px);
+}
+
+input+.focus-input+.symbol-input{
+    transition: transform .5s;
+}
+
+input:focus{
+    transition: .5s;
+}
+
+@keyframes neon-fade-in {
+    to {
+        border-color: var(--main-color);
+        box-shadow: 0 0 70px 25px;
+        opacity: 0;
+    }
+}
+
+.login-option{
+    margin-top: 20px;
+    font-size: .8rem;
+}
+
+.login-option > a{
+    color: var(--secondary-color);
+    transition: .2s;
+    cursor: pointer;
+}
+
+.login-option > a:hover{
+    color: var(--main-color);
+    transition: .2s;
+}
