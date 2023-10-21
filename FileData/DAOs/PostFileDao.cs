@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using Application.LogicInterfaces;
+using Domain.DTOs;
 using Domain.Models;
 
 namespace FileData.DAOs;
@@ -30,14 +31,14 @@ public class PostFileDao : IPostDao
         return Task.FromResult(post);
     }
 
-    public Task<ICollection<Post>> GetAllAsync()
+    public Task<IEnumerable<Post>> GetAllAsync(SearchPostParametersDto searchPostDto)
     {
         ICollection<Post> postList = context.Posts.OrderByDescending(p => p.CreatedAt).ToList();
-        return Task.FromResult(postList);
+        return Task.FromResult(postList.AsEnumerable());
     }
 
-    public Task<Post?> GetAsync(string postTitle, int ownerId)
+    public Task<Post?> GetAsync(string postTitle, string ownerEmail)
     {
-        return Task.FromResult(context.Posts.FirstOrDefault(p => p.Title.Equals(postTitle) && p.Owner.Id == ownerId));
+        return Task.FromResult(context.Posts.FirstOrDefault(p => p.Title.Equals(postTitle) && p.Owner.Email == ownerEmail));
     }
 }

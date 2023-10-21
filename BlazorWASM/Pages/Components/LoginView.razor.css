@@ -1,0 +1,46 @@
+
+
+.card{
+    font-size: 16px;
+}
+
+.symbol-input{
+    position: absolute;
+    margin: 5px;
+    margin-left: 20px;
+}
+
+
+
+.login-option{
+    margin-top: 20px;
+    font-size: .8rem;
+}
+
+.login-option > a{
+    color: #c2c2c2;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.login-option > a:hover{
+    color: var(--accent-secondary-color);
+    transition: .2s;
+}
+
+.login-button{
+    color: white;
+    background-color: #0c4128;
+    padding: 5px 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 0;
+    transition: .4s;
+}
+
+.login-button:hover{
+    color: #000000;
+    background-color: #1b945b;
+    padding: 5px 15px;
+    transition: .4s;
+}

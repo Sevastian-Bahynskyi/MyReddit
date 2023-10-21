@@ -1,6 +1,6 @@
 namespace Domain.DTOs;
 
-public class SearchUserParametersDto
+public class SearchUserParametersDto : SearchDto
 {
     public string UsernameContains { get; }
 

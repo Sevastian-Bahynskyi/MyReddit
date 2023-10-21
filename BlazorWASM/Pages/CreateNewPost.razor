@@ -1,0 +1,96 @@
+@page "/CreateNewPost"
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs
+@using System.Security.Claims
+@using Domain.Models
+@using Radzen
+@inject IPostService postService
+@inject NotificationService notificationService
+@attribute [Authorize]
+
+
+<div class="post-creation-container card d-flex justify-content-center align-items-center">
+    <h6>New post</h6>
+    <div class="field">
+        <input type="text" @bind="title" placeholder="Title"/>
+        <span class="focus-input"></span>
+    </div>
+    <div class="field">
+        <textarea type="text" placeholder="Description" @bind="description"></textarea>
+        <span class="focus-input"></span>
+    </div>
+    
+    <button class="primary-button" @onclick="CreatePost">Create</button>
+</div>
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    private string title;
+    private string description;
+    private bool isLoggedIn;
+
+    private string email;
+    private IEnumerable<Claim>? userClaims;
+
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        isLoggedIn = user.Identity != null;
+
+        if (!isLoggedIn) return;
+        userClaims = user.Claims;
+        email = user.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+    }
+
+    private async Task CreatePost()
+    {
+        try
+        {
+            HandleEmptyFields();
+            Post post = await postService.CreateAsync(new PostCreationDto(email, title, description));
+            string userName = post.Owner.Username;
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Summary = "Post was created",
+                Detail = $"{userName} created a new post: {post.Title}: {DateTime.Now}"
+            });
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
+    }
+    
+    private void HandleEmptyFields()
+    {
+        string msg = "";
+        int emptyFieldsCounter = 0;
+        if (string.IsNullOrEmpty(title))
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Title" : ", title";
+            emptyFieldsCounter++;
+        }
+
+        if (string.IsNullOrEmpty(description))
+        {
+            msg += string.IsNullOrEmpty(msg) ? "Description" : ", description";
+            emptyFieldsCounter++;
+        }
+
+        if (!string.IsNullOrEmpty(msg))
+            throw new Exception(emptyFieldsCounter > 1 ? $"{msg} fields are empty." : $"{msg} field is empty.");
+    }
+}

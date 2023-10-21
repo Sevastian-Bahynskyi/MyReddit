@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@using BlazorWASM.Pages.Components
 
 <div class="page">
     <div class="sidebar">
@@ -6,8 +7,12 @@
     </div>
 
     <main>
+        <div class="top-row">
+            <LoginButtons/>
+        </div>
         <article class="content px-4">
             @Body
         </article>
+        <RadzenComponents/>
     </main>
 </div>

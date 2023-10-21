@@ -1,29 +1,27 @@
+*{
+    --bg-primary-color: #f4f1de;
+    --accent-primary-color: #e07a5f;
+    --text-primary-color: #3d405b;
+    --bg-secondary-color: #81b29a;
+    --accent-secondary-color: rgba(87,184,70,.8);
+    --bg-primary-colder-color: #e5e5e5;
+}
+
 .card{
     position: relative;
     margin: auto;
-    width: 25%;
+    width: fit-content;
     padding: 10px;
     border-radius: 16px;
     border-color: lightgray;
     background-color: white;
 }
 
-.primary-button{
-    color: white;
-    background-color: #0c4128;
-    padding: 5px 10px;
-    margin-top: 20px;
-    border-radius: 10px;
-    border: 0;
-    transition: .4s;
+main{
+    background-color: var(--bg-primary-color)!important;
 }
 
-.primary-button:hover{
-    color: #000000;
-    background-color: #1b945b;
-    padding: 5px 15px;
-    transition: .4s;
-}
+
 
 .field{
     margin-top: 15px;
@@ -33,4 +31,102 @@
 .icon{
     width: 30px;
     cursor: pointer;
+}
+
+.primary-button{
+    position: relative;
+    background-color: var(--accent-primary-color);
+    border: 0;
+    border-radius: 10px;
+    z-index: 1;
+    text-align: center;
+}
+
+.primary-button::after
+{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    z-index: -1;
+    height: 100%;
+    border-radius: 10px;
+    transition: all .4s ease;
+    background-color: rgba(0,0,0, 0.1);
+}
+
+.primary-button:hover{
+    color: black;
+}
+
+.primary-button:hover::after{
+    left: 0;
+    transition: all .4s ease;
+    width: 100%;
+}
+
+.field{
+    position: relative;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+}
+
+input, textarea{
+    display: block;
+    padding: 5px 5px 5px 55px;
+    outline: none;
+    width: 100%;
+    border-radius: 25px;
+    border: 0;
+    background-color: var(--bg-primary-colder-color);
+    transition: .5s;
+}
+
+.focus-input{
+    display: block;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0;
+    color: var(--accent-secondary-color);
+}
+
+input:focus +.focus-input,
+textarea:focus+.focus-input{
+    animation: neon-anim .5s ease-in-out forwards;
+}
+
+input:focus+.focus-input+.symbol-input{
+    color: var(--accent-secondary-color);
+    transition: transform .5s;
+    transform: translateX(-5px);
+}
+
+input+.focus-input+.symbol-input{
+    transition: transform .5s;
+}
+
+input:focus{
+    transition: .5s;
+}
+
+@keyframes neon-anim {
+    to {
+        border-color: var(--accent-secondary-color);
+        box-shadow: 0 0 70px 25px;
+        opacity: 0;
+    }
+}
+
+.error-label{
+    color: red;
+    display: block;
 }

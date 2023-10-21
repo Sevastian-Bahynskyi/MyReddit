@@ -1,0 +1,29 @@
+@using HttpClients.ClientInterfaces
+@using Domain.Models
+@using Domain.DTOs
+@inject IPostService postService
+<div class="post-list-container d-flex flex-column align-items-center">
+    @if (PostList != null)
+    {
+        foreach (var post in PostList)
+        {
+            <div class="post-card">
+                <div class="post-top-row d-flex flex-row">
+                    <p>@post.Owner.Username</p>
+                </div>
+                <h1>@post.Title</h1>
+                <p>@post.Description</p>
+                <div class="post-bottom-row d-flex flex-row"></div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public IEnumerable<Post>? PostList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        PostList = await postService.GetAsync(new SearchPostParametersDto());
+    }
+}

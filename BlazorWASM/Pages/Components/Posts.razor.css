@@ -1,0 +1,17 @@
+.post-card{
+    display: block;
+    border-radius: 16px;
+    background-color: transparent;
+    width: 35%;
+    padding: 1em;
+    margin: 1em 1em 0;
+    color: var(--text-primary-color);
+    user-select: none;
+    text-wrap: normal;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.post-card:hover{
+    background-color: var(--accent-primary-color);
+}

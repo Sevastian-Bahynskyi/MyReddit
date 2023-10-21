@@ -32,11 +32,11 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<Post>> GetAsync()
+    public async Task<ActionResult<Post>> GetAsync([FromQuery] SearchPostParametersDto searchPostDto)
     {
         try
         {
-            var postList = await logic.GetAllAsync();
+            var postList = await logic.GetAllAsync(searchPostDto);
             return Ok(postList);
         }
         catch (Exception e)

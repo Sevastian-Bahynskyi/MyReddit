@@ -1,0 +1,27 @@
+@using HttpClients.ClientInterfaces
+@inject NavigationManager navManager
+@inject IUserAuthService authService
+@namespace BlazorWASM.Pages.Components
+
+<AuthorizeView>
+    <Authorized>
+        <i class="fa fa-right-to-bracket fa-rotate-180" @onclick="LogOut"></i>
+    </Authorized>
+    <NotAuthorized>
+        <i class="fa fa-right-to-bracket" @onclick="Login"></i>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    private void Login()
+    {
+        navManager.NavigateTo("/");
+    }
+
+    private async Task LogOut()
+    {
+        await authService.LogoutAsync();
+        navManager.NavigateTo("/");
+    }
+}

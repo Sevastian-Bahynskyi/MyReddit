@@ -1,3 +1,4 @@
+using System.Collections;
 using Domain.DTOs;
 using Domain.Models;
 
@@ -6,6 +7,6 @@ namespace Application.LogicInterfaces;
 public interface IPostLogic
 {
     Task<Post> CreateAsync(PostCreationDto creationDto);
-    Task<ICollection<Post>> GetAllAsync();
-    Task<ICollection<Comment>> GetCommentsAsync();
+    Task<IEnumerable<Post>> GetAllAsync(SearchPostParametersDto searchPostDto);
+    Task<IEnumerable<Comment>> GetCommentsAsync();
 }

@@ -4,6 +4,7 @@ using System.Text.Json;
 using Domain.DTOs;
 using Domain.Models;
 using HttpClients.ClientInterfaces;
+using HttpClients.HttpClients;
 
 namespace HttpClients.Implementations;
 
@@ -22,12 +23,8 @@ public class JwtUserAuthService : IUserAuthService
     public async Task LoginAsync(UserLoginDto loginDto)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/login", loginDto);
-        string responseContent = await responseMessage.Content.ReadAsStringAsync();
-        if (!responseMessage.IsSuccessStatusCode)
-        {
-            throw new Exception(responseContent);
-        }
-
+        string responseContent = await HttpClientHelper.HandleResponse(responseMessage);
+        
         Jwt = responseContent;
 
         ClaimsPrincipal principal = CreateClaimsPrincipal();
@@ -45,13 +42,8 @@ public class JwtUserAuthService : IUserAuthService
     public async Task RegisterAsync(UserRegistrationDto registrationDto)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/register", registrationDto);
-        //this line is not reached, on the server side everything is perfect
-        string responseContent = await responseMessage.Content.ReadAsStringAsync();
 
-        if (!responseMessage.IsSuccessStatusCode)
-        {
-            throw new Exception(responseContent);
-        }
+        string responseContent = await HttpClientHelper.HandleResponse(responseMessage);
         
         Jwt = responseContent;
 
