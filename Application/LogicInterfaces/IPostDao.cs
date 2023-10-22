@@ -10,4 +10,5 @@ public interface IPostDao
     Task<IEnumerable<Post>> GetAllAsync(SearchPostParametersDto searchPostDto);
     Task<Post?> GetAsync(string postTitle, string ownerEmail);
     Task<Post?> GetByIdAsync(int id);
+    Task UpdateAsync(Post post);
 }

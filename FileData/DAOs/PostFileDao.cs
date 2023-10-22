@@ -46,4 +46,14 @@ public class PostFileDao : IPostDao
     {
         return Task.FromResult(context.Posts.FirstOrDefault(p => p.Id == id));
     }
+
+    public async Task UpdateAsync(Post post)
+    {
+        Post? existing = await GetByIdAsync(post.Id);
+        if (existing is null)
+            throw new Exception($"Post with id {post.Id} is not found");
+
+        context.Posts.Remove(existing);
+        context.Posts.Add(post);
+    }
 }

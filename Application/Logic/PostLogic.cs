@@ -63,6 +63,22 @@ public class PostLogic : IPostLogic
         return post;
     }
 
+    public async Task<Post> UpdateAsync(PostUpdateDto updateDto)
+    {
+        Post post = await GetByIdAsync(updateDto.Id);
+
+        post.Title = updateDto.Title ?? post.Title;
+        post.Description = updateDto.Description ?? post.Description;
+
+        if (updateDto.VoteAction == PostUpdateDto.VoteUpdateAction.UpVote)
+            post.UpVotes++;
+        else if (updateDto.VoteAction == PostUpdateDto.VoteUpdateAction.DownVote)
+            post.DownVotes++;
+        
+        await postDao.UpdateAsync(post);
+        return post;
+    }
+
     private void ValidateData(string title, string description)
     {
         if (title.Length is < TITLE_MIN or > TITLE_MAX)
