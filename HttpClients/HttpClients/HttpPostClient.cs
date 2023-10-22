@@ -39,4 +39,15 @@ public class HttpPostClient : IPostService
         string content = await HttpClientHelper.HandleResponse(responseMessage);
         return await HttpClientHelper.GenerateObjectFromJson<Post>(content);
     }
+
+    public async Task UpdateAsync(PostUpdateDto updateDto)
+    {
+        HttpResponseMessage responseMessage = await client.PatchAsJsonAsync($"{START_URI}", updateDto);
+        await HttpClientHelper.HandleResponse(responseMessage);
+    }
+
+    public Task DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

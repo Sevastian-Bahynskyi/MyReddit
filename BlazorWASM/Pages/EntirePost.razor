@@ -1,6 +1,7 @@
 @page "/EntirePost/{postId:int}"
 @using Domain.Models
 @using HttpClients.ClientInterfaces
+@using Domain.DTOs
 @inject IPostService postService
 
 @if (post is null)
@@ -9,7 +10,7 @@
 }
 else
 {
-    <div class="post-card">
+    <div class="post-card card">
         <div class="post-top-row d-flex flex-row">
             <p>@post.Owner.Username</p>
         </div>
@@ -17,9 +18,9 @@ else
         <p>@post.Description</p>
         <div class="post-bottom-row d-flex flex-row justify-content-end">
             <div class="vote-area">
-                <span class="upvote oi oi-arrow-top"></span>
+                <span class="upvote oi oi-arrow-top" @onclick="VoteUp"></span>
                 <span>@post.UpVotes</span>
-                <span class="downvote oi oi-arrow-down"></span>
+                <span class="downvote oi oi-arrow-down" @onclick="VoteDown"></span>
             </div>
         </div>
     </div>
@@ -27,11 +28,28 @@ else
 
 @code {
     [Parameter] public int PostId { get; set; }
-    private Post post;
+    private Post? post;
 
     protected override async Task OnInitializedAsync()
     {
         post = await postService.GetByIdAsync(PostId);
     }
 
+    private void VoteUp()
+    {
+        PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
+        {
+            VoteAction = PostUpdateDto.VoteUpdateAction.UpVote
+        };
+        postService.UpdateAsync(updateDto);
+    }
+    
+    private void VoteDown()
+    {
+        PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
+        {
+            VoteAction = PostUpdateDto.VoteUpdateAction.DownVote
+        };
+        postService.UpdateAsync(updateDto);
+    }
 }
