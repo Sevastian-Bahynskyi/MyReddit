@@ -237,7 +237,12 @@
       "Title": "hws5t6jhsethserusr",
       "Description": "hjsrjs4rurtghjsrfj",
       "CreatedAt": "2023-10-20T13:31:02.2927144+02:00",
-      "Votes": []
+      "Votes": [
+        {
+          "OwnerEmail": "dummy1@gmail.com",
+          "Vote": 0
+        }
+      ]
     },
     {
       "Id": 16,
@@ -320,7 +325,12 @@
       "Title": "erhjw5yh45yhwterjhserjn",
       "Description": "s4riuw4jw4jhw46hj",
       "CreatedAt": "2023-10-20T14:00:23.2379203+02:00",
-      "Votes": []
+      "Votes": [
+        {
+          "OwnerEmail": "dummy1@gmail.com",
+          "Vote": 1
+        }
+      ]
     }
   ],
   "Comments": []

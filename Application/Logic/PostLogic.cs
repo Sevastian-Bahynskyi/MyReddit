@@ -72,11 +72,13 @@ public class PostLogic : IPostLogic
         post.Description = updateDto.Description ?? post.Description;
 
 
-        if (updateDto.VoteAction != null)
+        if (updateDto.VoteAction != null && !post.Votes.Any(v => 
+                v.OwnerEmail.Equals(updateDto.VoteAction.OwnerEmail) && v.Vote == updateDto.VoteAction.Vote))
         {
             if (await userDao.GetByEmailAsync(updateDto.VoteAction.OwnerEmail) == null)
                 throw new Exception($"Vote action can't be done due to email invalidity.");
 
+            post.Votes.RemoveWhere(v => v.OwnerEmail.Equals(post.Owner.Email));
             post.Votes.Add(updateDto.VoteAction);
         }
         

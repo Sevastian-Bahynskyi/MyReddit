@@ -1,16 +1,13 @@
 .vote-area{
+    --up-arrow-color: #d93a00;
+    --down-arrow-color: #6a5cff;
+}
+
+.vote-area{
     background-color: var(--bg-primary-colder-color);
     width: fit-content;
     border-radius: 16px;
 }
-
-/*.upvote:hover{*/
-/*    color: #d93a00*/
-/*}*/
-
-/*.downvote:hover{*/
-/*    color: #6a5cff*/
-/*}*/
 
 .vote-area button{
     outline: none;
@@ -19,9 +16,9 @@
 }
 
 .vote-area button:hover .upvote{
-    color: #d93a00
+    color: var(--up-arrow-color)
 }
 
 .vote-area button:hover .downvote{
-    color: #6a5cff
+    color: var(--down-arrow-color)
 }

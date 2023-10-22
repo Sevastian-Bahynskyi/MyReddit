@@ -51,7 +51,6 @@ public class FileContext
 
         string content = File.ReadAllText(FILE_PATH);
         dataContainer = JsonSerializer.Deserialize<DataContainer>(content);
-        int i = 0;
     }
 
     public void SaveChanges()

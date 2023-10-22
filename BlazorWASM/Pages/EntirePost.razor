@@ -21,9 +21,21 @@ else
         <p>@post.Description</p>
         <div class="post-bottom-row d-flex flex-row justify-content-end">
             <div class="vote-area">
-                <button @onclick="VoteUp"><span class="upvote oi oi-arrow-top"></span></button>
-                <span>@postVoteUps</span>
-                <button @onclick="VoteDown"><span class="downvote oi oi-arrow-bottom" ></span></button>
+                @{
+                    string styleUpArrow = "";
+                    string styleDownArrow = "";
+                    if (currentVote == PostVote.VoteAction.VoteUp)
+                    {
+                        styleUpArrow = "color: var(--up-arrow-color);";
+                    }
+                    else if(currentVote == PostVote.VoteAction.VoteDown)
+                    {
+                        styleDownArrow = "color: var(--down-arrow-color);";
+                    }
+                    <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
+                    <span>@postVoteUps</span>
+                    <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
+                }
             </div>
         </div>
     </div>
@@ -38,6 +50,7 @@ else
     
     [Parameter] public int PostId { get; set; }
     private Post? post;
+    private PostVote.VoteAction? currentVote;
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,6 +60,7 @@ else
         
         post = await postService.GetByIdAsync(PostId);
         postVoteUps = post.Votes.Count(v => v.Vote == PostVote.VoteAction.VoteUp);
+        currentVote = post!.Votes.FirstOrDefault(v => v.OwnerEmail.Equals(userEmail))?.Vote;
     }
 
     private void VoteUp()
@@ -67,6 +81,7 @@ else
         };
         post = await postService.UpdateAsync(updateDto);
         postVoteUps = post.Votes.Count(v => v.Vote == PostVote.VoteAction.VoteUp);
+        currentVote = post!.Votes.FirstOrDefault(v => v.OwnerEmail.Equals(userEmail))?.Vote;
         StateHasChanged();
     }
 }
