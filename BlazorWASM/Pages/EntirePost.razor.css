@@ -1,0 +1,13 @@
+.vote-area{
+    background-color: var(--bg-primary-colder-color);
+    width: fit-content;
+    border-radius: 16px;
+}
+
+.upvote:hover{
+    color: #d93a00
+}
+
+.downvote:hover{
+    color: #6a5cff
+}

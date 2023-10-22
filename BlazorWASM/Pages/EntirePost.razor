@@ -1,0 +1,37 @@
+@page "/EntirePost/{postId:int}"
+@using Domain.Models
+@using HttpClients.ClientInterfaces
+@inject IPostService postService
+
+@if (post is null)
+{
+    <label>Loading...</label>
+}
+else
+{
+    <div class="post-card">
+        <div class="post-top-row d-flex flex-row">
+            <p>@post.Owner.Username</p>
+        </div>
+        <h1>@post.Title</h1>
+        <p>@post.Description</p>
+        <div class="post-bottom-row d-flex flex-row justify-content-end">
+            <div class="vote-area">
+                <span class="upvote oi oi-arrow-top"></span>
+                <span>@post.UpVotes</span>
+                <span class="downvote oi oi-arrow-down"></span>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int PostId { get; set; }
+    private Post post;
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await postService.GetByIdAsync(PostId);
+    }
+
+}

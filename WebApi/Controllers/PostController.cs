@@ -32,11 +32,26 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<Post>> GetAsync([FromQuery] SearchPostParametersDto searchPostDto)
+    public async Task<ActionResult<IEnumerable<Post>>> GetAsync([FromQuery] SearchPostParametersDto searchPostDto)
     {
         try
         {
             var postList = await logic.GetAllAsync(searchPostDto);
+            return Ok(postList);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
+    
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Post>> GetAsync([FromRoute] int id)
+    {
+        try
+        {
+            Post postList = await logic.GetByIdAsync(id);
             return Ok(postList);
         }
         catch (Exception e)

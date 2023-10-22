@@ -41,4 +41,9 @@ public class PostFileDao : IPostDao
     {
         return Task.FromResult(context.Posts.FirstOrDefault(p => p.Title.Equals(postTitle) && p.Owner.Email == ownerEmail));
     }
+
+    public Task<Post?> GetByIdAsync(int id)
+    {
+        return Task.FromResult(context.Posts.FirstOrDefault(p => p.Id == id));
+    }
 }

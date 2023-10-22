@@ -11,7 +11,7 @@ public class PostLogic : IPostLogic
     
     const int TITLE_MIN = 5;
     const int TITLE_MAX = 150;
-    const int DESCRIPTION_MIN = 10;
+    const int DESCRIPTION_MIN = 5;
     const int DESCRIPTION_MAX = 20_000;
 
     public PostLogic(IPostDao postDao, IUserDao userDao)
@@ -53,6 +53,14 @@ public class PostLogic : IPostLogic
     public Task<IEnumerable<Comment>> GetCommentsAsync()
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<Post> GetByIdAsync(int id)
+    {
+        Post? post  = await postDao.GetByIdAsync(id);
+        if (post is null)
+            throw new Exception($"Post with id {id} doesn't exist");
+        return post;
     }
 
     private void ValidateData(string title, string description)

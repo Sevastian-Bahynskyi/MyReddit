@@ -54,7 +54,9 @@
       },
       "Title": "Bla-bla-bla",
       "Description": "No description, lol",
-      "CreatedAt": "2023-10-02T14:47:37.5064559+02:00"
+      "CreatedAt": "2023-10-02T14:47:37.5064559+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 2,
@@ -66,7 +68,9 @@
       },
       "Title": "Bla-bla-blo",
       "Description": "No description, lol",
-      "CreatedAt": "2023-10-02T14:47:37.5128149+02:00"
+      "CreatedAt": "2023-10-02T14:47:37.5128149+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 3,
@@ -78,7 +82,9 @@
       },
       "Title": "New post",
       "Description": "Bla-bla-bla",
-      "CreatedAt": "2023-10-02T14:55:07.6518698+02:00"
+      "CreatedAt": "2023-10-02T14:55:07.6518698+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 4,
@@ -90,7 +96,9 @@
       },
       "Title": "Some title",
       "Description": "some description",
-      "CreatedAt": "2023-10-20T13:00:46.3244628+02:00"
+      "CreatedAt": "2023-10-20T13:00:46.3244628+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 5,
@@ -102,7 +110,9 @@
       },
       "Title": "Not Some title",
       "Description": "Some description",
-      "CreatedAt": "2023-10-20T13:03:00.8799399+02:00"
+      "CreatedAt": "2023-10-20T13:03:00.8799399+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 6,
@@ -114,7 +124,9 @@
       },
       "Title": "New onedsrthsrth",
       "Description": "weryhwehtsrthrh",
-      "CreatedAt": "2023-10-20T13:06:46.6543891+02:00"
+      "CreatedAt": "2023-10-20T13:06:46.6543891+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 7,
@@ -126,7 +138,9 @@
       },
       "Title": "sethshwrh",
       "Description": "jwsrjhrws6jsrjryj",
-      "CreatedAt": "2023-10-20T13:12:51.411731+02:00"
+      "CreatedAt": "2023-10-20T13:12:51.411731+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 8,
@@ -138,7 +152,9 @@
       },
       "Title": "wsrethjwsrjksrjks",
       "Description": "jsrjsrjsrhs4r6ujsuj",
-      "CreatedAt": "2023-10-20T13:13:57.2434052+02:00"
+      "CreatedAt": "2023-10-20T13:13:57.2434052+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 9,
@@ -150,7 +166,9 @@
       },
       "Title": "dsrjdrjdrdtkjdtkj",
       "Description": "jdrjkdrtjdrjkdtkjtedk",
-      "CreatedAt": "2023-10-20T13:15:29.7463362+02:00"
+      "CreatedAt": "2023-10-20T13:15:29.7463362+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 10,
@@ -162,7 +180,9 @@
       },
       "Title": "srtjwuw453aetjh",
       "Description": "w5srjr6jiwsrjkrsdtyj",
-      "CreatedAt": "2023-10-20T13:17:03.8494177+02:00"
+      "CreatedAt": "2023-10-20T13:17:03.8494177+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 11,
@@ -174,7 +194,9 @@
       },
       "Title": "w46uw46uijwe45iw54ik",
       "Description": "w5e76ike5ike57ikoe57ik",
-      "CreatedAt": "2023-10-20T13:17:41.1200815+02:00"
+      "CreatedAt": "2023-10-20T13:17:41.1200815+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 12,
@@ -186,7 +208,9 @@
       },
       "Title": "srjsrjsedrj",
       "Description": "rdjkrdjkr5jkd5r7jked5try7kj",
-      "CreatedAt": "2023-10-20T13:26:13.7002716+02:00"
+      "CreatedAt": "2023-10-20T13:26:13.7002716+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 13,
@@ -198,7 +222,9 @@
       },
       "Title": "yie5t7yi567u83e556j",
       "Description": "edrtyjdtkdtkldrtk",
-      "CreatedAt": "2023-10-20T13:27:25.4162565+02:00"
+      "CreatedAt": "2023-10-20T13:27:25.4162565+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 14,
@@ -210,7 +236,9 @@
       },
       "Title": "ertyjerjrsdjdryjsdrjkdrj",
       "Description": "drsjkdrtjkdyjkdtyrfjkdyrtjk",
-      "CreatedAt": "2023-10-20T13:30:15.2851561+02:00"
+      "CreatedAt": "2023-10-20T13:30:15.2851561+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 15,
@@ -222,7 +250,9 @@
       },
       "Title": "hws5t6jhsethserusr",
       "Description": "hjsrjs4rurtghjsrfj",
-      "CreatedAt": "2023-10-20T13:31:02.2927144+02:00"
+      "CreatedAt": "2023-10-20T13:31:02.2927144+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 16,
@@ -234,7 +264,9 @@
       },
       "Title": "ytsdjsdrjsrtyjhnsdrjsdrj",
       "Description": "nsrfdjdrjkrtykjmdrtyjk",
-      "CreatedAt": "2023-10-20T13:34:32.4910177+02:00"
+      "CreatedAt": "2023-10-20T13:34:32.4910177+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 17,
@@ -246,7 +278,9 @@
       },
       "Title": "esjketyujmndtjkedtkjm",
       "Description": "dtkumykedtrxhkjmsedjkms",
-      "CreatedAt": "2023-10-20T13:38:35.8150155+02:00"
+      "CreatedAt": "2023-10-20T13:38:35.8150155+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 18,
@@ -258,7 +292,9 @@
       },
       "Title": "fukdtyrjed56iujdytkfyulxdrjdrtykj",
       "Description": "drjkdrt6idtjndtrudfcjdft76idftck",
-      "CreatedAt": "2023-10-20T13:54:33.302086+02:00"
+      "CreatedAt": "2023-10-20T13:54:33.302086+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 19,
@@ -270,7 +306,9 @@
       },
       "Title": "w46ujrykjdtykdtkryk",
       "Description": "dxtuykdt7knjmrtykdrftk",
-      "CreatedAt": "2023-10-20T13:56:57.8218936+02:00"
+      "CreatedAt": "2023-10-20T13:56:57.8218936+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 20,
@@ -282,7 +320,9 @@
       },
       "Title": "asthebasthehbetrbhnsgh",
       "Description": "dbnsrhsbfgbwstgbsdbh",
-      "CreatedAt": "2023-10-20T13:58:32.647067+02:00"
+      "CreatedAt": "2023-10-20T13:58:32.647067+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     },
     {
       "Id": 21,
@@ -294,7 +334,9 @@
       },
       "Title": "erhjw5yh45yhwterjhserjn",
       "Description": "s4riuw4jw4jhw46hj",
-      "CreatedAt": "2023-10-20T14:00:23.2379203+02:00"
+      "CreatedAt": "2023-10-20T14:00:23.2379203+02:00",
+      "UpVotes": 0,
+      "DownVotes": 0
     }
   ],
   "Comments": []

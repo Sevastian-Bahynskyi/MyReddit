@@ -25,6 +25,13 @@ public class HttpPostClient : IPostService
         return await HttpClientHelper.GenerateObjectFromJson<IEnumerable<Post>>(content);
     }
 
+    public async Task<Post> GetByIdAsync(int id)
+    {
+        HttpResponseMessage responseMessage = await client.GetAsync($"{START_URI}/{id}");
+        string content = await HttpClientHelper.HandleResponse(responseMessage);
+        return await HttpClientHelper.GenerateObjectFromJson<Post>(content);
+    }
+
     public async Task<Post> CreateAsync(PostCreationDto postCreationDto)
     {
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}", postCreationDto);
