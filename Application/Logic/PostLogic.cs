@@ -65,15 +65,20 @@ public class PostLogic : IPostLogic
 
     public async Task<Post> UpdateAsync(PostUpdateDto updateDto)
     {
+        
         Post post = await GetByIdAsync(updateDto.Id);
 
         post.Title = updateDto.Title ?? post.Title;
         post.Description = updateDto.Description ?? post.Description;
 
-        if (updateDto.VoteAction == PostUpdateDto.VoteUpdateAction.UpVote)
-            post.UpVotes++;
-        else if (updateDto.VoteAction == PostUpdateDto.VoteUpdateAction.DownVote)
-            post.DownVotes++;
+
+        if (updateDto.VoteAction != null)
+        {
+            if (await userDao.GetByEmailAsync(updateDto.VoteAction.OwnerEmail) == null)
+                throw new Exception($"Vote action can't be done due to email invalidity.");
+
+            post.Votes.Add(updateDto.VoteAction);
+        }
         
         await postDao.UpdateAsync(post);
         return post;

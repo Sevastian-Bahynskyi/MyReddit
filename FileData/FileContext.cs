@@ -37,6 +37,7 @@ public class FileContext
 
     public void LoadData()
     {
+        if (dataContainer != null) return;
         if (!File.Exists(FILE_PATH))
         {
             dataContainer = new DataContainer()
@@ -50,6 +51,7 @@ public class FileContext
 
         string content = File.ReadAllText(FILE_PATH);
         dataContainer = JsonSerializer.Deserialize<DataContainer>(content);
+        int i = 0;
     }
 
     public void SaveChanges()

@@ -40,10 +40,11 @@ public class HttpPostClient : IPostService
         return await HttpClientHelper.GenerateObjectFromJson<Post>(content);
     }
 
-    public async Task UpdateAsync(PostUpdateDto updateDto)
+    public async Task<Post> UpdateAsync(PostUpdateDto updateDto)
     {
         HttpResponseMessage responseMessage = await client.PatchAsJsonAsync($"{START_URI}", updateDto);
-        await HttpClientHelper.HandleResponse(responseMessage);
+        string content = await HttpClientHelper.HandleResponse(responseMessage);
+        return await HttpClientHelper.GenerateObjectFromJson<Post>(content);
     }
 
     public Task DeleteAsync(int id)

@@ -2,7 +2,10 @@
 @using Domain.Models
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
+@using System.Security.Claims
 @inject IPostService postService
+@attribute [Authorize]
+        
 
 @if (post is null)
 {
@@ -18,38 +21,52 @@ else
         <p>@post.Description</p>
         <div class="post-bottom-row d-flex flex-row justify-content-end">
             <div class="vote-area">
-                <span class="upvote oi oi-arrow-top" @onclick="VoteUp"></span>
-                <span>@post.UpVotes</span>
-                <span class="downvote oi oi-arrow-down" @onclick="VoteDown"></span>
+                <button @onclick="VoteUp"><span class="upvote oi oi-arrow-top"></span></button>
+                <span>@postVoteUps</span>
+                <button @onclick="VoteDown"><span class="downvote oi oi-arrow-bottom" ></span></button>
             </div>
         </div>
     </div>
 }
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    private string userEmail;
+    private int postVoteUps;
+    
     [Parameter] public int PostId { get; set; }
     private Post? post;
 
     protected override async Task OnInitializedAsync()
     {
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal claims = authState.User;
+        userEmail = claims.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
+        
         post = await postService.GetByIdAsync(PostId);
+        postVoteUps = post.Votes.Count(v => v.Vote == PostVote.VoteAction.VoteUp);
     }
 
     private void VoteUp()
     {
-        PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
-        {
-            VoteAction = PostUpdateDto.VoteUpdateAction.UpVote
-        };
-        postService.UpdateAsync(updateDto);
+        Vote(PostVote.VoteAction.VoteUp);
     }
     
     private void VoteDown()
     {
+        Vote(PostVote.VoteAction.VoteDown);
+    }
+
+    private async void Vote(PostVote.VoteAction voteAction)
+    {
         PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
         {
-            VoteAction = PostUpdateDto.VoteUpdateAction.DownVote
+            VoteAction = new PostVote { OwnerEmail = userEmail, Vote = voteAction }
         };
-        postService.UpdateAsync(updateDto);
+        post = await postService.UpdateAsync(updateDto);
+        postVoteUps = post.Votes.Count(v => v.Vote == PostVote.VoteAction.VoteUp);
+        StateHasChanged();
     }
 }
