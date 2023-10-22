@@ -60,4 +60,20 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+
+    [HttpPatch]
+    public async Task<ActionResult> UpdateAsync([FromBody] PostUpdateDto updateDto)
+    {
+        try
+        {
+            Post post = await logic.UpdateAsync(updateDto);
+            return Ok(post);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }
