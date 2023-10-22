@@ -8,5 +8,5 @@ public class Post
     public string Description { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public HashSet<PostVote> Votes { get; } = new();
+    public HashSet<PostVote> Votes { get; set; }
 }
