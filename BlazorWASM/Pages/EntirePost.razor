@@ -3,6 +3,7 @@
 @using HttpClients.ClientInterfaces
 @using Domain.DTOs
 @using System.Security.Claims
+@using Domain.Models.Votes
 @inject IPostService postService
 @attribute [Authorize]
         
@@ -24,11 +25,11 @@ else
                 @{
                     string styleUpArrow = "";
                     string styleDownArrow = "";
-                    if (currentVote == PostVote.VoteAction.VoteUp)
+                    if (currentVote == VoteAction.VoteUp)
                     {
                         styleUpArrow = "color: var(--up-arrow-color);";
                     }
-                    else if(currentVote == PostVote.VoteAction.VoteDown)
+                    else if(currentVote == VoteAction.VoteDown)
                     {
                         styleDownArrow = "color: var(--down-arrow-color);";
                     }
@@ -47,41 +48,49 @@ else
 
     private string userEmail;
     private int postVoteUps;
-    
+
     [Parameter] public int PostId { get; set; }
     private Post? post;
-    private PostVote.VoteAction? currentVote;
+    private VoteAction? currentVote;
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal claims = authState.User;
         userEmail = claims.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
-        
         post = await postService.GetByIdAsync(PostId);
-        postVoteUps = post.Votes.Count(v => v.Vote == PostVote.VoteAction.VoteUp);
-        currentVote = post!.Votes.FirstOrDefault(v => v.OwnerEmail.Equals(userEmail))?.Vote;
+        UpdatePostVoteUps();
+        UpdateCurrentVote();
     }
 
+    private void UpdatePostVoteUps()
+    {
+        postVoteUps = post!.Votes.PositiveVotesNumber;
+    }
+    private void UpdateCurrentVote()
+    {
+        currentVote = post!.Votes.UserCurrentVote(userEmail);
+    }
+    
     private void VoteUp()
     {
-        Vote(PostVote.VoteAction.VoteUp);
+        Vote(VoteAction.VoteUp);
     }
     
     private void VoteDown()
     {
-        Vote(PostVote.VoteAction.VoteDown);
+        Vote(VoteAction.VoteDown);
     }
 
-    private async void Vote(PostVote.VoteAction voteAction)
+    private async void Vote(VoteAction voteAction)
     {
         PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
         {
             VoteAction = new PostVote { OwnerEmail = userEmail, Vote = voteAction }
         };
         post = await postService.UpdateAsync(updateDto);
-        postVoteUps = post.Votes.Count(v => v.Vote == PostVote.VoteAction.VoteUp);
-        currentVote = post!.Votes.FirstOrDefault(v => v.OwnerEmail.Equals(userEmail))?.Vote;
+        UpdatePostVoteUps();
+        UpdateCurrentVote();
         StateHasChanged();
     }
 }

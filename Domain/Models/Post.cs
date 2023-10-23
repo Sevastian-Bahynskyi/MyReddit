@@ -1,3 +1,5 @@
+using Domain.Models.Votes;
+
 namespace Domain.Models;
 
 public class Post
@@ -8,5 +10,5 @@ public class Post
     public string Description { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public HashSet<PostVote> Votes { get; set; }
+    public PostVotes Votes { get; set; }
 }
