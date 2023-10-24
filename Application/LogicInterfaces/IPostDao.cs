@@ -11,5 +11,4 @@ public interface IPostDao
     Task<Post?> GetAsync(string postTitle, string ownerEmail);
     Task<Post?> GetByIdAsync(int id);
     Task UpdateAsync(Post post);
-    Task<Comment> CreateCommentAsync(Comment comment, int postId);
 }

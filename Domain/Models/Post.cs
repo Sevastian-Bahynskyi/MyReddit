@@ -41,4 +41,18 @@ public class Post
 
         return null;
     }
+
+    public void RemoveCommentById(int id)
+    {
+        if (Comments.Any(r => r.Id == id))
+            Comments.RemoveAll(r => r.Id == id);
+        
+        foreach (var currentComment in Comments)
+        {
+            var foundComment = FindAReplyOfComment(id, currentComment);
+            if (foundComment != null)
+                currentComment.Replies.Remove(foundComment);
+                
+        }
+    }
 }

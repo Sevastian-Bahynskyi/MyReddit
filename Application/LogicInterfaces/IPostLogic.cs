@@ -8,8 +8,6 @@ public interface IPostLogic
 {
     Task<Post> CreateAsync(PostCreationDto creationDto);
     Task<IEnumerable<Post>> GetAllAsync(SearchPostParametersDto searchPostDto);
-    Task<IEnumerable<Comment>> GetCommentsAsync();
     Task<Post> GetByIdAsync(int id);
     Task<Post> UpdateAsync(PostUpdateDto updateDto);
-    Task<Comment> CreateCommentAsync(CommentCreationDto creationDto);
 }

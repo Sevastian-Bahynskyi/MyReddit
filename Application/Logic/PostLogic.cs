@@ -7,7 +7,7 @@ namespace Application.Logic;
 
 public class PostLogic : IPostLogic
 {
-    private readonly IPostDao postDao;
+     private readonly IPostDao postDao;
     private readonly IUserDao userDao;
     
     const int TITLE_MIN = 5;
@@ -84,30 +84,6 @@ public class PostLogic : IPostLogic
         
         await postDao.UpdateAsync(post);
         return post;
-    }
-
-    public async Task<Comment> CreateCommentAsync(CommentCreationDto creationDto)
-    {
-        User? existing = await userDao.GetByEmailAsync(creationDto.OwnerEmail);
-        if (existing == null)
-            throw new Exception($"User with email {creationDto.OwnerEmail} doesn't exist");
-
-        Post? post = await postDao.GetByIdAsync(creationDto.PostId);
-        if (post == null)
-            throw new Exception($"Post with id {post?.Id} doesn't exist");
-
-        if (creationDto.CommentId != null && post.FindACommentById(creationDto.CommentId.Value) == null)
-            throw new Exception($"Comment with id {creationDto.CommentId} doesn't exist");
-
-        Comment comment = new Comment()
-        {
-            CommentBody = creationDto.CommentBody,
-            Owner = existing
-        };
-        if (creationDto.CommentId != null)
-            comment.ReplyToCommentId = creationDto.CommentId;
-        
-        return await postDao.CreateCommentAsync(comment, creationDto.PostId);
     }
 
     private void ValidateData(string title, string description)

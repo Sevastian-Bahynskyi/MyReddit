@@ -16,6 +16,7 @@ builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("http
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<IUserAuthService, JwtUserAuthService>();
 builder.Services.AddScoped<IPostService, HttpPostClient>();
+builder.Services.AddScoped<ICommentService, HttpCommentClient>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 
 AuthorizationPolicies.AddPolicies(builder.Services);

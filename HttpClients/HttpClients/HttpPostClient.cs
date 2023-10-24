@@ -51,11 +51,4 @@ public class HttpPostClient : IPostService
     {
         throw new NotImplementedException();
     }
-
-    public async Task<Comment> CreateCommentAsync(CommentCreationDto commentCreationDto)
-    {
-        HttpResponseMessage responseMessage = await client.PostAsJsonAsync($"{START_URI}/comments", commentCreationDto);
-        string content = await HttpClientHelper.HandleResponse(responseMessage);
-        return await HttpClientHelper.GenerateObjectFromJson<Comment>(content);
-    }
 }

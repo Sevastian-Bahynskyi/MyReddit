@@ -48,26 +48,6 @@ public class PostFileDao : IPostDao
         return Task.CompletedTask;
     }
 
-    public Task<Comment> CreateCommentAsync(Comment comment, int postId)
-    {
-        Post post = context.Data!.Posts.FirstOrDefault(p => p.Id == postId)!;
-        comment.Id = ++context.Data!.LastCommentId;
-        
-        if(comment.ReplyToCommentId != null)
-        {
-            var foundComment = post.FindACommentById(comment.ReplyToCommentId.Value);
-            if(foundComment != null)
-                foundComment.Replies.Add(comment);
-        }
-        else
-        {
-            post.Comments.Add(comment);
-        }
-        
-        context.SaveChanges();
-        return Task.FromResult(comment);
-    }
-
     private void AddPost(Post post)
     {
         post.Id = ++context.Data!.LastPostId;
