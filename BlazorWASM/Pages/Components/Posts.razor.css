@@ -1,3 +1,6 @@
+
+
+
 .post-card{
     display: block;
     border-radius: 16px;
@@ -15,4 +18,22 @@
 
 .post-card:hover{
     background-color: var(--accent-primary-color);
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+    .post-card{
+        width: 45%;
+    }
+}
+
+@media all and (min-width: 480px) and (max-width: 768px) {
+    .post-card{
+        width: 55%;
+    }
+}
+
+@media all and (max-width: 480px) {
+    .post-card{
+        width: 60%;
+    }
 }

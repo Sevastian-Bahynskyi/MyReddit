@@ -2,17 +2,24 @@
 @using BlazorWASM.Pages.Components
 @namespace BlazorWASM.Pages.Components
 
-<div class="comment-card">
+<div class="@Class">
+    <p><a href="favicon.png">@Comment.Owner.Username</a></p>
     <p>@Comment.CommentBody</p>
 
-
-@foreach (var reply in Comment.Replies)
-{
-    <CommentBox Comment="@reply"/>
-}
+    @foreach (var reply in Comment.Replies)
+    {
+        <CommentBox Class="with-margin" Comment="@reply"/>
+    }
 </div>
 
 
 @code {
+
+    private string _class = "comment-box";
+    [Parameter]
+    public string Class {
+        get => _class;
+        set => _class = $"{_class} {value}";
+    }
     [Parameter] public Comment Comment { get; set; }
 }

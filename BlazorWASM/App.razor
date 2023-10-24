@@ -1,10 +1,11 @@
-﻿<CascadingAuthenticationState>
+﻿@using BlazorWASM.Pages.Components
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    @* Todo: maybe add something more fancy *@
-                    <p>You'll have to log in!</p>
+                    <LoginView/>
                 </NotAuthorized>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1"/>

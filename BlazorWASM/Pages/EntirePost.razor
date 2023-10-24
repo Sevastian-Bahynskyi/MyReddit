@@ -9,53 +9,58 @@
 @attribute [Authorize]
         
 
-@if (post is null)
-{
-    <label>Loading...</label>
-}
-else
-{
-    <div class="post-card card">
-        <div class="post-top-row d-flex flex-row">
-            <p>@post.Owner.Username</p>
-        </div>
-        <h1>@post.Title</h1>
-        <p>@post.Description</p>
-        <div class="post-bottom-row d-flex flex-row justify-content-end">
-            <div class="vote-area">
-                @{
-                    string styleUpArrow = "";
-                    string styleDownArrow = "";
-                    if (currentVote == VoteAction.VoteUp)
-                    {
-                        styleUpArrow = "color: var(--up-arrow-color);";
-                    }
-                    else if(currentVote == VoteAction.VoteDown)
-                    {
-                        styleDownArrow = "color: var(--down-arrow-color);";
-                    }
-                    <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
-                    <span>@postVoteUps</span>
-                    <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
-                }
-            </div>
-            <div class="comment-area">
-                <button @onclick="@(() => isShowingComments = true)">
-                    <span class="fa fa-comment"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-    @if (isShowingComments)
+<div class="content d-flex justify-content-center">
+    @if (post is null)
     {
-        <div class="comments-card">
-            @foreach (var comment in post.Comments)
+        <label>Loading...</label>
+    }
+    else
+    {
+        <div class="entire-post-container">
+            <div class="post-card card">
+                <div class="post-top-row d-flex flex-row">
+                    <p>@post.Owner.Username</p>
+                </div>
+                <h1>@post.Title</h1>
+                <p>@post.Description</p>
+                <div class="post-bottom-row d-flex flex-row justify-content-end">
+                    <div class="vote-area d-flex flex-row align-items-center justify-content-between">
+                        @{
+                            string styleUpArrow = "";
+                            string styleDownArrow = "";
+                            if (currentVote == VoteAction.VoteUp)
+                            {
+                                styleUpArrow = "color: var(--up-arrow-color);";
+                            }
+                            else if(currentVote == VoteAction.VoteDown)
+                            {
+                                styleDownArrow = "color: var(--down-arrow-color);";
+                            }
+                            <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
+                            <span>@postVoteUps</span>
+                            <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
+                        }
+                    </div>
+                    <div class="comment-area">
+                        <button @onclick="@(() => isShowingComments = true)">
+                            <span class="fa fa-comment"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            @if (isShowingComments)
             {
-                <CommentBox Comment="comment"/>
+                <div class="comments-box">
+                    @foreach (var comment in post.Comments)
+                    {
+                        <CommentBox Comment="comment"/>
+                    }
+                </div>
             }
         </div>
     }
-}
+</div>
+
 
 @code {
     [CascadingParameter]
