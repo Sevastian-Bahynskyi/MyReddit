@@ -13,12 +13,8 @@ public class UserFileDao: IUserDao
     }
     public Task<User> CreateAsync(User user)
     {
-        int newId = 1;
-        if (context.Users.Any())
-            newId = context.Users.Max(u => u.Id) + 1;
-
-        user.Id = newId;
-        context.Users.Add(user);
+        user.Id = context.Data!.LastUserId;
+        context.Data.Users.Add(user);
         context.SaveChanges();
 
         return Task.FromResult(user);
@@ -26,11 +22,11 @@ public class UserFileDao: IUserDao
 
     public Task<User?> GetByEmailAsync(string email)
     {
-        return Task.FromResult(context.Users.FirstOrDefault(u => u.Email.Equals(email)));
+        return Task.FromResult(context.Data!.Users.FirstOrDefault(u => u.Email.Equals(email)));
     }
 
     public Task<User?> GetByIdAsync(int userId)
     {
-        return Task.FromResult(context.Users.FirstOrDefault(u => u.Id == userId));
+        return Task.FromResult(context.Data!.Users.FirstOrDefault(u => u.Id == userId));
     }
 }

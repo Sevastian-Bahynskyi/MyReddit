@@ -5,33 +5,14 @@ namespace FileData;
 
 public class FileContext
 {
-    private const string FILE_PATH = "data.json";
+    private readonly string FILE_PATH = "data.json";
     private DataContainer? dataContainer;
-
-    public ICollection<User> Users
+    public DataContainer? Data 
     {
         get
         {
             LoadData();
-            return dataContainer!.Users;
-        }
-    }
-    
-    public ICollection<Post> Posts
-    {
-        get
-        {
-            LoadData();
-            return dataContainer!.Posts;
-        }
-    }
-    
-    public ICollection<Comment> Comments
-    {
-        get
-        {
-            LoadData();
-            return dataContainer!.Comments;
+            return dataContainer;
         }
     }
     
@@ -44,8 +25,7 @@ public class FileContext
             dataContainer = new DataContainer()
             {
                 Posts = new List<Post>(),
-                Users = new List<User>(),
-                Comments = new List<Comment>()
+                Users = new List<User>()
             };
             return;
         }
@@ -58,7 +38,6 @@ public class FileContext
     {
         dataContainer!.Users = dataContainer.Users.OrderBy(u => u.Id).ToList();
         dataContainer!.Posts = dataContainer.Posts.OrderBy(p => p.Id).ToList();
-        dataContainer!.Comments = dataContainer.Comments.OrderBy(c => c.Id).ToList();
 
         string jsonData = JsonSerializer.Serialize(dataContainer, new JsonSerializerOptions()
         {

@@ -96,7 +96,7 @@ public class PostLogic : IPostLogic
         if (post == null)
             throw new Exception($"Post with id {post?.Id} doesn't exist");
 
-        if (creationDto.CommentId != null && post.Comments.Find(c => c.Id == creationDto.CommentId) == null)
+        if (creationDto.CommentId != null && post.FindACommentById(creationDto.CommentId.Value) == null)
             throw new Exception($"Comment with id {creationDto.CommentId} doesn't exist");
 
         Comment comment = new Comment()

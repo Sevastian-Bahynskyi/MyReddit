@@ -402,78 +402,7 @@
       "Title": "asthebasthehbetrbhnsgh",
       "Description": "dbnsrhsbfgbwstgbsdbh",
       "CreatedAt": "2023-10-20T13:58:32.647067+02:00",
-      "Comments": [
-        {
-          "Id": 1,
-          "ReplyToCommentId": null,
-          "Replies": [
-            {
-              "Id": 2,
-              "ReplyToCommentId": 1,
-              "Replies": [],
-              "CommentBody": "commentNestedTo1",
-              "Owner": {
-                "Id": 1,
-                "Email": "dummy1@gmail.com",
-                "Username": "Sevastian",
-                "Password": "password_test"
-              },
-              "Votes": {
-                "Votes": [],
-                "PositiveVotesNumber": 0,
-                "NegativeVotesNumber": 0
-              }
-            }
-          ],
-          "CommentBody": "comment1",
-          "Owner": {
-            "Id": 1,
-            "Email": "dummy1@gmail.com",
-            "Username": "Sevastian",
-            "Password": "password_test"
-          },
-          "Votes": {
-            "Votes": [],
-            "PositiveVotesNumber": 0,
-            "NegativeVotesNumber": 0
-          }
-        },
-        {
-          "Id": 2,
-          "ReplyToCommentId": null,
-          "Replies": [
-            {
-              "Id": 3,
-              "ReplyToCommentId": 2,
-              "Replies": [],
-              "CommentBody": "commentNestedTo2",
-              "Owner": {
-                "Id": 1,
-                "Email": "dummy1@gmail.com",
-                "Username": "Sevastian",
-                "Password": "password_test"
-              },
-              "Votes": {
-                "Votes": [],
-                "PositiveVotesNumber": 0,
-                "NegativeVotesNumber": 0
-              }
-            }
-          ],
-          "CommentBody": "comment2",
-          "Owner": {
-            "Id": 1,
-            "Email": "dummy1@gmail.com",
-            "Username": "Sevastian",
-            "Password": "password_test"
-          },
-          "Votes": {
-            "Votes": [],
-            "PositiveVotesNumber": 0,
-            "NegativeVotesNumber": 0
-          }
-        }
-      ],
+      "Comments": [],
       "Votes": {
         "Votes": [
           {
@@ -519,7 +448,78 @@
       "Title": "Comments",
       "Description": "Comments should appear as not null in json",
       "CreatedAt": "2023-10-23T12:15:35.4338792+02:00",
-      "Comments": [],
+      "Comments": [
+        {
+          "Id": 1,
+          "ReplyToCommentId": null,
+          "Replies": [
+            {
+              "Id": 4,
+              "ReplyToCommentId": 1,
+              "Replies": [
+                {
+                  "Id": 5,
+                  "ReplyToCommentId": 4,
+                  "Replies": [],
+                  "CommentBody": "commentNestedToNested4",
+                  "Owner": {
+                    "Id": 1,
+                    "Email": "dummy1@gmail.com",
+                    "Username": "Sevastian",
+                    "Password": "password_test"
+                  },
+                  "Votes": {
+                    "Votes": [],
+                    "PositiveVotesNumber": 0,
+                    "NegativeVotesNumber": 0
+                  }
+                },
+                {
+                  "Id": 6,
+                  "ReplyToCommentId": 4,
+                  "Replies": [],
+                  "CommentBody": "commentNestedToNested4",
+                  "Owner": {
+                    "Id": 1,
+                    "Email": "dummy1@gmail.com",
+                    "Username": "Sevastian",
+                    "Password": "password_test"
+                  },
+                  "Votes": {
+                    "Votes": [],
+                    "PositiveVotesNumber": 0,
+                    "NegativeVotesNumber": 0
+                  }
+                }
+              ],
+              "CommentBody": "commentNestedTo1",
+              "Owner": {
+                "Id": 1,
+                "Email": "dummy1@gmail.com",
+                "Username": "Sevastian",
+                "Password": "password_test"
+              },
+              "Votes": {
+                "Votes": [],
+                "PositiveVotesNumber": 0,
+                "NegativeVotesNumber": 0
+              }
+            }
+          ],
+          "CommentBody": "comment1",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        }
+      ],
       "Votes": {
         "Votes": [
           {
@@ -530,6 +530,27 @@
         "PositiveVotesNumber": 0,
         "NegativeVotesNumber": 1
       }
+    },
+    {
+      "Id": 23,
+      "Owner": {
+        "Id": 1,
+        "Email": "dummy1@gmail.com",
+        "Username": "Sevastian",
+        "Password": "password_test"
+      },
+      "Title": "DummyPost",
+      "Description": "DummyPost that is created for test purposes",
+      "CreatedAt": "2023-10-24T19:31:05.8985067+02:00",
+      "Comments": [],
+      "Votes": {
+        "Votes": [],
+        "PositiveVotesNumber": 0,
+        "NegativeVotesNumber": 0
+      }
     }
-  ]
+  ],
+  "LastUserId": 9,
+  "LastCommentId": 6,
+  "LastPostId": 23
 }
