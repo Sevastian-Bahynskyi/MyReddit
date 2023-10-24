@@ -34,6 +34,7 @@ public class FileContext
             return dataContainer!.Comments;
         }
     }
+    
 
     public void LoadData()
     {
@@ -42,9 +43,9 @@ public class FileContext
         {
             dataContainer = new DataContainer()
             {
-                Comments = new List<Comment>(),
                 Posts = new List<Post>(),
-                Users = new List<User>()
+                Users = new List<User>(),
+                Comments = new List<Comment>()
             };
             return;
         }
@@ -56,8 +57,8 @@ public class FileContext
     public void SaveChanges()
     {
         dataContainer!.Users = dataContainer.Users.OrderBy(u => u.Id).ToList();
-        dataContainer!.Comments = dataContainer.Comments.OrderBy(c => c.Id).ToList();
         dataContainer!.Posts = dataContainer.Posts.OrderBy(p => p.Id).ToList();
+        dataContainer!.Comments = dataContainer.Comments.OrderBy(c => c.Id).ToList();
 
         string jsonData = JsonSerializer.Serialize(dataContainer, new JsonSerializerOptions()
         {

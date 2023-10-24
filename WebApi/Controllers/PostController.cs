@@ -76,4 +76,20 @@ public class PostController : ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpPost, Route("comments")]
+    public async Task<ActionResult<Comment>> CreateCommentAsync([FromBody] CommentCreationDto creationDto)
+    {
+        try
+        {
+            Comment comment = await logic.CreateCommentAsync(creationDto);
+            return Created($"/comments/{comment.Id}/{creationDto.CommentBody}", comment);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

@@ -54,9 +54,30 @@ public class PostFileDao : IPostDao
         if (existing is null)
             throw new Exception($"Post with id {post.Id} is not found");
 
-        bool bl = context.Posts.Remove(existing);
+        context.Posts.Remove(existing);
         context.Posts.Add(post);
         context.SaveChanges();
         return Task.CompletedTask;
+    }
+
+    public Task<Comment> CreateCommentAsync(Comment comment, int postId)
+    {
+        Post post = context.Posts.FirstOrDefault(p => p.Id == postId)!;
+        int id = 1;
+        if(context.Comments.Any())
+            id = post.Comments.Max(c => c.Id) + 1;
+        comment.Id = id;
+        
+        if(comment.ReplyToCommentId != null)
+        {
+            context.Comments
+            .FirstOrDefault(c => c.Id == comment.ReplyToCommentId)!
+            .Replies.Add(comment);
+        }
+        else
+            post.Comments.Add(comment);
+        
+        context.SaveChanges();
+        return Task.FromResult(comment);
     }
 }

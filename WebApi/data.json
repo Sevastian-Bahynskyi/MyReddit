@@ -55,6 +55,7 @@
       "Title": "Bla-bla-bla",
       "Description": "No description, lol",
       "CreatedAt": "2023-10-02T14:47:37.5064559+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -72,6 +73,7 @@
       "Title": "Bla-bla-blo",
       "Description": "No description, lol",
       "CreatedAt": "2023-10-02T14:47:37.5128149+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -89,6 +91,7 @@
       "Title": "New post",
       "Description": "Bla-bla-bla",
       "CreatedAt": "2023-10-02T14:55:07.6518698+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -106,6 +109,7 @@
       "Title": "Some title",
       "Description": "some description",
       "CreatedAt": "2023-10-20T13:00:46.3244628+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -123,6 +127,7 @@
       "Title": "Not Some title",
       "Description": "Some description",
       "CreatedAt": "2023-10-20T13:03:00.8799399+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -140,6 +145,7 @@
       "Title": "New onedsrthsrth",
       "Description": "weryhwehtsrthrh",
       "CreatedAt": "2023-10-20T13:06:46.6543891+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -157,6 +163,7 @@
       "Title": "sethshwrh",
       "Description": "jwsrjhrws6jsrjryj",
       "CreatedAt": "2023-10-20T13:12:51.411731+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -174,10 +181,16 @@
       "Title": "wsrethjwsrjksrjks",
       "Description": "jsrjsrjsrhs4r6ujsuj",
       "CreatedAt": "2023-10-20T13:13:57.2434052+02:00",
+      "Comments": [],
       "Votes": {
-        "Votes": [],
+        "Votes": [
+          {
+            "OwnerEmail": "dummy1@gmail.com",
+            "Vote": 1
+          }
+        ],
         "PositiveVotesNumber": 0,
-        "NegativeVotesNumber": 0
+        "NegativeVotesNumber": 1
       }
     },
     {
@@ -191,6 +204,7 @@
       "Title": "dsrjdrjdrdtkjdtkj",
       "Description": "jdrjkdrtjdrjkdtkjtedk",
       "CreatedAt": "2023-10-20T13:15:29.7463362+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -208,6 +222,7 @@
       "Title": "srtjwuw453aetjh",
       "Description": "w5srjr6jiwsrjkrsdtyj",
       "CreatedAt": "2023-10-20T13:17:03.8494177+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -225,6 +240,7 @@
       "Title": "w46uw46uijwe45iw54ik",
       "Description": "w5e76ike5ike57ikoe57ik",
       "CreatedAt": "2023-10-20T13:17:41.1200815+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -242,6 +258,7 @@
       "Title": "srjsrjsedrj",
       "Description": "rdjkrdjkr5jkd5r7jked5try7kj",
       "CreatedAt": "2023-10-20T13:26:13.7002716+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -259,6 +276,7 @@
       "Title": "yie5t7yi567u83e556j",
       "Description": "edrtyjdtkdtkldrtk",
       "CreatedAt": "2023-10-20T13:27:25.4162565+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -276,6 +294,7 @@
       "Title": "ertyjerjrsdjdryjsdrjkdrj",
       "Description": "drsjkdrtjkdyjkdtyrfjkdyrtjk",
       "CreatedAt": "2023-10-20T13:30:15.2851561+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -293,6 +312,7 @@
       "Title": "hws5t6jhsethserusr",
       "Description": "hjsrjs4rurtghjsrfj",
       "CreatedAt": "2023-10-20T13:31:02.2927144+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -310,6 +330,7 @@
       "Title": "ytsdjsdrjsrtyjhnsdrjsdrj",
       "Description": "nsrfdjdrjkrtykjmdrtyjk",
       "CreatedAt": "2023-10-20T13:34:32.4910177+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -327,6 +348,7 @@
       "Title": "esjketyujmndtjkedtkjm",
       "Description": "dtkumykedtrxhkjmsedjkms",
       "CreatedAt": "2023-10-20T13:38:35.8150155+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -344,6 +366,7 @@
       "Title": "fukdtyrjed56iujdytkfyulxdrjdrtykj",
       "Description": "drjkdrt6idtjndtrudfcjdft76idftck",
       "CreatedAt": "2023-10-20T13:54:33.302086+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -361,6 +384,7 @@
       "Title": "w46ujrykjdtykdtkryk",
       "Description": "dxtuykdt7knjmrtykdrftk",
       "CreatedAt": "2023-10-20T13:56:57.8218936+02:00",
+      "Comments": [],
       "Votes": {
         "Votes": [],
         "PositiveVotesNumber": 0,
@@ -378,6 +402,78 @@
       "Title": "asthebasthehbetrbhnsgh",
       "Description": "dbnsrhsbfgbwstgbsdbh",
       "CreatedAt": "2023-10-20T13:58:32.647067+02:00",
+      "Comments": [
+        {
+          "Id": 1,
+          "ReplyToCommentId": null,
+          "Replies": [
+            {
+              "Id": 2,
+              "ReplyToCommentId": 1,
+              "Replies": [],
+              "CommentBody": "commentNestedTo1",
+              "Owner": {
+                "Id": 1,
+                "Email": "dummy1@gmail.com",
+                "Username": "Sevastian",
+                "Password": "password_test"
+              },
+              "Votes": {
+                "Votes": [],
+                "PositiveVotesNumber": 0,
+                "NegativeVotesNumber": 0
+              }
+            }
+          ],
+          "CommentBody": "comment1",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        },
+        {
+          "Id": 2,
+          "ReplyToCommentId": null,
+          "Replies": [
+            {
+              "Id": 3,
+              "ReplyToCommentId": 2,
+              "Replies": [],
+              "CommentBody": "commentNestedTo2",
+              "Owner": {
+                "Id": 1,
+                "Email": "dummy1@gmail.com",
+                "Username": "Sevastian",
+                "Password": "password_test"
+              },
+              "Votes": {
+                "Votes": [],
+                "PositiveVotesNumber": 0,
+                "NegativeVotesNumber": 0
+              }
+            }
+          ],
+          "CommentBody": "comment2",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        }
+      ],
       "Votes": {
         "Votes": [
           {
@@ -400,12 +496,40 @@
       "Title": "erhjw5yh45yhwterjhserjn",
       "Description": "s4riuw4jw4jhw46hj",
       "CreatedAt": "2023-10-20T14:00:23.2379203+02:00",
+      "Comments": [],
       "Votes": {
-        "Votes": [],
-        "PositiveVotesNumber": 0,
+        "Votes": [
+          {
+            "OwnerEmail": "dummy1@gmail.com",
+            "Vote": 0
+          }
+        ],
+        "PositiveVotesNumber": 1,
         "NegativeVotesNumber": 0
       }
+    },
+    {
+      "Id": 22,
+      "Owner": {
+        "Id": 3,
+        "Email": "dummyD@gmail.com",
+        "Username": "Dani",
+        "Password": "passwordD"
+      },
+      "Title": "Comments",
+      "Description": "Comments should appear as not null in json",
+      "CreatedAt": "2023-10-23T12:15:35.4338792+02:00",
+      "Comments": [],
+      "Votes": {
+        "Votes": [
+          {
+            "OwnerEmail": "dummy1@gmail.com",
+            "Vote": 1
+          }
+        ],
+        "PositiveVotesNumber": 0,
+        "NegativeVotesNumber": 1
+      }
     }
-  ],
-  "Comments": []
+  ]
 }

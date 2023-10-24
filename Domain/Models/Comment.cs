@@ -1,20 +1,13 @@
+using Domain.Models.Votes;
+
 namespace Domain.Models;
 
 public class Comment
 {
     public int Id { get; set; }
-    public ICollection<Comment> Replies { get; set; }
-    public string CommentBody { get; set; }
-    public int Likes { get; private set; }
-
-    public Comment(string commentBody)
-    {
-        CommentBody = commentBody;
-        Replies = new List<Comment>();
-    }
-
-    public void Like()
-    {
-        Likes++;
-    }
+    public int? ReplyToCommentId { get; set; }
+    public ICollection<Comment> Replies { get; set; } = new List<Comment>();
+    public string CommentBody { get; init; }
+    public User Owner { get; init; }
+    public PostVotes Votes { get; set; } = new ();
 }

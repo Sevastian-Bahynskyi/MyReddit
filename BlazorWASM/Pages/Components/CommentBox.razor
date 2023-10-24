@@ -1,0 +1,18 @@
+@using Domain.Models
+@using BlazorWASM.Pages.Components
+@namespace BlazorWASM.Pages.Components
+
+<div class="comment-card">
+    <p>@Comment.CommentBody</p>
+
+
+@foreach (var reply in Comment.Replies)
+{
+    <CommentBox Comment="@reply"/>
+}
+</div>
+
+
+@code {
+    [Parameter] public Comment Comment { get; set; }
+}

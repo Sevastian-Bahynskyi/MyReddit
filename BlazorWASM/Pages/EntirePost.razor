@@ -5,6 +5,7 @@
 @using System.Security.Claims
 @using Domain.Models.Votes
 @inject IPostService postService
+@using BlazorWASM.Pages.Components
 @attribute [Authorize]
         
 
@@ -38,8 +39,22 @@ else
                     <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
                 }
             </div>
+            <div class="comment-area">
+                <button @onclick="@(() => isShowingComments = true)">
+                    <span class="fa fa-comment"></span>
+                </button>
+            </div>
         </div>
     </div>
+    @if (isShowingComments)
+    {
+        <div class="comments-card">
+            @foreach (var comment in post.Comments)
+            {
+                <CommentBox Comment="comment"/>
+            }
+        </div>
+    }
 }
 
 @code {
@@ -53,6 +68,8 @@ else
     private Post? post;
     private VoteAction? currentVote;
 
+    private bool isShowingComments;
+
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
@@ -62,6 +79,8 @@ else
         UpdatePostVoteUps();
         UpdateCurrentVote();
     }
+
+    
 
     private void UpdatePostVoteUps()
     {

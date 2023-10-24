@@ -10,4 +10,5 @@ public interface IPostService
     Task<Post> CreateAsync(PostCreationDto postCreationDto);
     Task<Post> UpdateAsync(PostUpdateDto updateDto);
     Task DeleteAsync(int id);
+    Task<Comment> CreateCommentAsync(CommentCreationDto commentCreationDto);
 }

@@ -11,4 +11,5 @@ public interface IPostLogic
     Task<IEnumerable<Comment>> GetCommentsAsync();
     Task<Post> GetByIdAsync(int id);
     Task<Post> UpdateAsync(PostUpdateDto updateDto);
+    Task<Comment> CreateCommentAsync(CommentCreationDto creationDto);
 }
