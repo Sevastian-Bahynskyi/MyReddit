@@ -2,14 +2,13 @@ using Domain.Models.Votes;
 
 namespace Domain.DTOs;
 
-public class PostUpdateDto
+public class CommentUpdateDto
 {
     public int Id { get; private set; }
     public ContentVote? VoteAction { get; set; }
-    public string? Title { get; set; }
-    public string? Description { get; set; }
+    public string? CommentBody { get; set; }
 
-    public PostUpdateDto(int id)
+    public CommentUpdateDto(int id)
     {
         Id = id;
     }

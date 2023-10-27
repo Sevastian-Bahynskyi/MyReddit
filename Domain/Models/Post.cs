@@ -2,7 +2,7 @@ using Domain.Models.Votes;
 
 namespace Domain.Models;
 
-public class Post
+public class Post : IHasComments
 {
     public int Id { get; set; }
     public User Owner { get; set; }
@@ -31,7 +31,7 @@ public class Post
     {
         if (comment.Replies.Any(r => r.Id == replyId))
             return comment.Replies.First(r => r.Id == replyId);
-
+        
         foreach (var reply in comment.Replies)
         {
             var foundComment = FindAReplyOfComment(replyId, reply);
@@ -41,18 +41,36 @@ public class Post
 
         return null;
     }
-
-    public void RemoveCommentById(int id)
+    
+    public int CountAllComments()
     {
-        if (Comments.Any(r => r.Id == id))
-            Comments.RemoveAll(r => r.Id == id);
+        return Comments.Sum(comment => CountRepliesOfComment(comment) + 1);
+    }
+
+    private int CountRepliesOfComment(Comment comment)
+    {
+        return comment.Replies.Sum(CountRepliesOfComment) + comment.Replies.Count;
+    }
+
+    
+    
+    public Comment? RemoveCommentById(int id)
+    {
+        if(Comments.RemoveAll(comment => comment.Id == id) > 0)
+            return null;
+        Comment? toReturn = null;
+        Comments.ForEach(reply => toReturn = RemoveReplyById(id, reply));
+        return toReturn;
+
+    }
+    
+    private Comment? RemoveReplyById(int id, Comment comment)
+    {
+        if(comment.Replies.RemoveAll(c => c.Id == id) > 0)
+            return comment;
         
-        foreach (var currentComment in Comments)
-        {
-            var foundComment = FindAReplyOfComment(id, currentComment);
-            if (foundComment != null)
-                currentComment.Replies.Remove(foundComment);
-                
-        }
+        Comment? toReturn = null;
+        comment.Replies.ForEach(reply => toReturn = RemoveReplyById(id, reply));
+        return toReturn;
     }
 }

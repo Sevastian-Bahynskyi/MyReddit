@@ -34,4 +34,11 @@ public class HttpCommentClient : ICommentService
         await HttpClientHelper.HandleResponse(responseMessage);
         return true;
     }
+
+    public async Task<Comment> UpdateAsync(CommentUpdateDto updateDto)
+    {
+        HttpResponseMessage responseMessage = await client.PatchAsJsonAsync($"{START_URI}", updateDto);
+        string content = await HttpClientHelper.HandleResponse(responseMessage);
+        return await HttpClientHelper.GenerateObjectFromJson<Comment>(content);
+    }
 }

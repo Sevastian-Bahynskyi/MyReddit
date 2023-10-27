@@ -2,8 +2,8 @@ namespace Domain.Models.Votes;
 
 public class PostVotes
 {
-    private List<PostVote> votes;
-    public IEnumerable<PostVote> Votes
+    private List<ContentVote> votes;
+    public IEnumerable<ContentVote> Votes
     {
         get { return votes;}
         set { votes = value.ToList(); }
@@ -14,15 +14,15 @@ public class PostVotes
 
     public PostVotes()
     {
-        votes = new List<PostVote>();
+        votes = new List<ContentVote>();
     }
     
-    public PostVotes(IEnumerable<PostVote> votes)
+    public PostVotes(IEnumerable<ContentVote> votes)
     {
         this.votes = votes.ToList();
     }
 
-    public bool AddVote(PostVote vote)
+    public bool AddVote(ContentVote vote)
     {
         if (!votes.Any(v =>
                 v.OwnerEmail.Equals(vote.OwnerEmail) && v.Vote == vote.Vote))
@@ -37,7 +37,7 @@ public class PostVotes
 
     public bool AddVote(string ownerEmail, VoteAction voteAction)
     {
-        PostVote vote = new PostVote() { OwnerEmail = ownerEmail, Vote = voteAction };
+        ContentVote vote = new ContentVote() { OwnerEmail = ownerEmail, Vote = voteAction };
         return AddVote(vote);
     }
 

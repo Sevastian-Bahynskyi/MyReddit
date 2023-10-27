@@ -5,7 +5,10 @@
 @using System.Security.Claims
 @using Domain.Models.Votes
 @inject IPostService postService
+@inject ICommentService commentService
 @using BlazorWASM.Pages.Components
+@using Radzen
+@inject NotificationService notificationService
 @attribute [Authorize]
         
 
@@ -23,8 +26,8 @@
                 </div>
                 <h1>@post.Title</h1>
                 <p>@post.Description</p>
-                <div class="post-bottom-row d-flex flex-row justify-content-end">
-                    <div class="vote-area d-flex flex-row align-items-center justify-content-between">
+                <div class="post-bottom-row d-flex flex-row justify-content-start">
+                    <div class="vote-area action-area d-flex flex-row align-items-center justify-content-between">
                         @{
                             string styleUpArrow = "";
                             string styleDownArrow = "";
@@ -41,19 +44,26 @@
                             <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
                         }
                     </div>
-                    <div class="comment-area">
-                        <button @onclick="@(() => isShowingComments = true)">
+                    <div class="comment-area action-area px-2">
+                        <button @onclick="@(() => isShowingComments = !isShowingComments)">
                             <span class="fa fa-comment"></span>
+                            <span>@post.CountAllComments()</span>
                         </button>
                     </div>
                 </div>
             </div>
             @if (isShowingComments)
             {
+                <RadzenTextArea bind-Value="@newComment" Change=@(args => newComment = args)></RadzenTextArea>
+                <button @onclick="AddCommentAsync" class="new-comment-button">
+                    <span class="oi oi-plus"></span>
+                    Add a comment
+                </button>
+                
                 <div class="comments-box">
                     @foreach (var comment in post.Comments)
                     {
-                        <CommentBox Comment="comment"/>
+                        <CommentBox UserEmail="@userEmail" Comment="comment"/>
                     }
                 </div>
             }
@@ -68,6 +78,7 @@
 
     private string userEmail;
     private int postVoteUps;
+    private string newComment;
 
     [Parameter] public int PostId { get; set; }
     private Post? post;
@@ -83,6 +94,32 @@
         post = await postService.GetByIdAsync(PostId);
         UpdatePostVoteUps();
         UpdateCurrentVote();
+    }
+
+    private async Task AddCommentAsync()
+    {
+        try
+        {
+            newComment = "";
+            await commentService.CreateAsync(new CommentCreationDto()
+            {
+                CommentBody = newComment,
+                OwnerEmail = userEmail,
+                PostId = post!.Id
+            });
+            
+            post = await postService.GetByIdAsync(post.Id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
     }
 
     
@@ -108,13 +145,26 @@
 
     private async void Vote(VoteAction voteAction)
     {
-        PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
+        try
         {
-            VoteAction = new PostVote { OwnerEmail = userEmail, Vote = voteAction }
-        };
-        post = await postService.UpdateAsync(updateDto);
-        UpdatePostVoteUps();
-        UpdateCurrentVote();
-        StateHasChanged();
+            PostUpdateDto updateDto = new PostUpdateDto(post!.Id)
+            {
+                VoteAction = new ContentVote { OwnerEmail = userEmail, Vote = voteAction }
+            };
+            post = await postService.UpdateAsync(updateDto);
+            UpdatePostVoteUps();
+            UpdateCurrentVote();
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
     }
 }

@@ -8,4 +8,5 @@ public interface ICommentService
     Task<Comment> GetByIdAsync(int id);
     Task<Comment> CreateAsync(CommentCreationDto creationDto);
     Task<bool> DeleteAsync(int id);
+    Task<Comment> UpdateAsync(CommentUpdateDto updateDto);
 }

@@ -4,23 +4,18 @@
 @using HttpClients.ClientInterfaces
 @inject IPostService postService
 @inject NavigationManager navManager
+@attribute [Authorize]
 
 
-<AuthorizeView>
-    <Authorized>
-        <div class="create-post">
-            <button class="primary-button d-flex align-items-center" style="padding: 5px 10px 5px 0;"
-                    @onclick="CreatePost">
-                <span style="font-size: 1.6em; margin: 0 10px;" class="fa fa-plus fa-beat"></span>
-                Create post
-            </button>
-        </div>
-        <Posts/>
-    </Authorized>
-    <NotAuthorized>
-        <LoginView/>
-    </NotAuthorized>
-</AuthorizeView>
+
+<div class="create-post">
+    <button class="primary-button d-flex align-items-center" style="padding: 5px 10px 5px 0;"
+            @onclick="CreatePost">
+        <span style="font-size: 1.6em; margin: 0 10px;" class="fa fa-plus fa-beat"></span>
+        Create post
+    </button>
+</div>
+<Posts/>
 
 @code {
 

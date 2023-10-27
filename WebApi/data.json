@@ -630,6 +630,91 @@
             "PositiveVotesNumber": 0,
             "NegativeVotesNumber": 0
           }
+        },
+        {
+          "Id": 14,
+          "ReplyToCommentId": null,
+          "Replies": [],
+          "CommentBody": "oldfgahsthj",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        },
+        {
+          "Id": 15,
+          "ReplyToCommentId": null,
+          "Replies": [],
+          "CommentBody": "oldfgahsthj",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        },
+        {
+          "Id": 16,
+          "ReplyToCommentId": null,
+          "Replies": [],
+          "CommentBody": "sretujrjr6yj",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        },
+        {
+          "Id": 17,
+          "ReplyToCommentId": null,
+          "Replies": [],
+          "CommentBody": "sretujrjr6yj",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
+        },
+        {
+          "Id": 18,
+          "ReplyToCommentId": null,
+          "Replies": [],
+          "CommentBody": "sretujrjr6yj",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "Votes": {
+            "Votes": [],
+            "PositiveVotesNumber": 0,
+            "NegativeVotesNumber": 0
+          }
         }
       ],
       "Votes": {
@@ -717,6 +802,6 @@
     }
   ],
   "LastUserId": 9,
-  "LastCommentId": 13,
+  "LastCommentId": 18,
   "LastPostId": 24
 }

@@ -63,4 +63,18 @@ public class CommentFileDao: ICommentDao
         
         return Task.FromResult(foundComment);
     }
+
+    public Task UpdateAsync(Comment comment)
+    {
+        foreach (var post in context.Data!.Posts)
+        {
+            var parentComment = post.RemoveCommentById(comment.Id);
+            if (parentComment != null)
+            {
+                parentComment.Replies.Add(comment);
+            }
+        }
+        context.SaveChanges();
+        return Task.CompletedTask;
+    }
 }

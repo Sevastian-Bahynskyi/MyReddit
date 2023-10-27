@@ -1,14 +1,46 @@
 @using Domain.Models
 @using BlazorWASM.Pages.Components
+@using Domain.DTOs
+@using Domain.Models.Votes
+@using HttpClients.ClientInterfaces
+@using Radzen
 @namespace BlazorWASM.Pages.Components
+@inject ICommentService commentService
+@inject NotificationService notificationService
 
 <div class="@Class">
     <p><a href="favicon.png">@Comment.Owner.Username</a></p>
     <p>@Comment.CommentBody</p>
+    
+    <div class="post-bottom-row d-flex flex-row justify-content-end">
+        <div class="vote-area action-area d-flex flex-row align-items-center justify-content-between">
+            @{
+                string styleUpArrow = "";
+                string styleDownArrow = "";
+                if (currentVote == VoteAction.VoteUp)
+                {
+                    styleUpArrow = "color: var(--up-arrow-color);";
+                }
+                else if(currentVote == VoteAction.VoteDown)
+                {
+                    styleDownArrow = "color: var(--down-arrow-color);";
+                }
+                <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
+                <span>@contentVotesUp</span>
+                <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
+            }
+        </div>
+        <div class="comment-area action-area">
+            <button @onclick="@(() => isShowingComments = !isShowingComments)">
+                <span class="fa fa-comment"></span>
+                <span>@Comment.CountAllComments()</span>
+            </button>
+        </div>
+    </div>
 
     @foreach (var reply in Comment.Replies)
     {
-        <CommentBox Class="with-margin" Comment="@reply"/>
+        <CommentBox UserEmail="@UserEmail" Class="with-margin" Comment="@reply"/>
     }
 </div>
 
@@ -22,4 +54,54 @@
         set => _class = $"{_class} {value}";
     }
     [Parameter] public Comment Comment { get; set; }
+    [Parameter] public string UserEmail { get; set; }
+    private bool isShowingComments;
+    private int contentVotesUp;
+    private VoteAction? currentVote;
+
+    
+    private void UpdateContentVoteUps()
+    {
+        contentVotesUp = Comment.Votes.PositiveVotesNumber;
+    }
+    private void UpdateCurrentVote()
+    {
+        currentVote = Comment.Votes.UserCurrentVote(UserEmail);
+    }
+    
+    private void VoteUp()
+    {
+        Vote(VoteAction.VoteUp);
+    }
+    
+    private void VoteDown()
+    {
+        Vote(VoteAction.VoteDown);
+    }
+
+    private async void Vote(VoteAction voteAction)
+    {
+        try
+        {
+            CommentUpdateDto updateDto = new CommentUpdateDto(Comment.Id)
+            {
+                VoteAction = new ContentVote { OwnerEmail = UserEmail, Vote = voteAction }
+            };
+            Comment = await commentService.UpdateAsync(updateDto);
+            UpdateContentVoteUps();
+            UpdateCurrentVote();
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
+    }
+
 }

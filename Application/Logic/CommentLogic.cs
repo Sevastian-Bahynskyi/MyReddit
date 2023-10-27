@@ -41,8 +41,30 @@ public class CommentLogic : ICommentLogic
         return await commentDao.CreateAsync(comment, creationDto.PostId);
     }
 
-    public async Task<Comment?> GetByIdAsync(int id)
+    public async Task<Comment> GetByIdAsync(int id)
     {
-        return await commentDao.GetByIdAsync(id);
+        Comment? comment = await commentDao.GetByIdAsync(id);
+        if (comment == null)
+            throw new Exception($"Comment with id {id} doesn't exist");
+        return comment;
+    }
+
+    public async Task<Comment> UpdateAsync(CommentUpdateDto updateDto)
+    {
+        Comment comment = await GetByIdAsync(updateDto.Id);
+
+        comment.CommentBody = updateDto.CommentBody ?? comment.CommentBody;
+
+
+        if (updateDto.VoteAction != null)
+        {
+            if (await userDao.GetByEmailAsync(updateDto.VoteAction.OwnerEmail) == null)
+                throw new Exception($"Vote action can't be done due to email invalidity.");
+            comment.Votes.AddVote(updateDto.VoteAction);
+        }
+        
+        await commentDao.UpdateAsync(comment);
+
+        return comment;
     }
 }

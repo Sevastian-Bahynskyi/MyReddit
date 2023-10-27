@@ -56,7 +56,7 @@
             string userName = post.Owner.Username;
             notificationService.Notify(new NotificationMessage()
             {
-                Severity = NotificationSeverity.Error,
+                Severity = NotificationSeverity.Success,
                 Duration = 6000,
                 Summary = "Post was created",
                 Detail = $"{userName} created a new post: {post.Title}: {DateTime.Now}"

@@ -1,6 +1,23 @@
+.action-area{
+    margin-inline: 1rem;
+}
 
 .entire-post-container{
-    width: 40%;
+    width: 30%;
+}
+
+
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+    .post-card{
+        width: 40%;
+    }
+}
+
+@media all and (min-width: 480px) and (max-width: 768px) {
+    .post-card{
+        width: 50%;
+    }
 }
 
 .post-card{
@@ -12,6 +29,7 @@
     width: 100%;
 }
 
+
 .vote-area{
     --up-arrow-color: #d93a00;
     --down-arrow-color: #6a5cff;
@@ -21,14 +39,16 @@
     margin-inline: 0.3em;
 }
 
-.vote-area{
+.vote-area, .comment-area{
     text-align: center;
     background-color: var(--bg-primary-colder-color);
     width: fit-content;
     border-radius: 16px;
+    padding: 3px 5px;
 }
 
-.vote-area button{
+
+.vote-area button, .comment-area button{
     outline: none;
     border: none;
     background: transparent;
@@ -42,4 +62,8 @@
 
 .vote-area button:hover .downvote{
     color: var(--down-arrow-color)
+}
+
+.new-comment-button{
+    margin-right: auto;
 }
