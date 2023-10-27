@@ -26,44 +26,28 @@
                 </div>
                 <h1>@post.Title</h1>
                 <p>@post.Description</p>
-                <div class="post-bottom-row d-flex flex-row justify-content-start">
-                    <div class="vote-area action-area d-flex flex-row align-items-center justify-content-between">
-                        @{
-                            string styleUpArrow = "";
-                            string styleDownArrow = "";
-                            if (currentVote == VoteAction.VoteUp)
-                            {
-                                styleUpArrow = "color: var(--up-arrow-color);";
-                            }
-                            else if(currentVote == VoteAction.VoteDown)
-                            {
-                                styleDownArrow = "color: var(--down-arrow-color);";
-                            }
-                            <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
-                            <span>@postVoteUps</span>
-                            <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
-                        }
-                    </div>
-                    <div class="comment-area action-area px-2">
-                        <button @onclick="@(() => isShowingComments = !isShowingComments)">
-                            <span class="fa fa-comment"></span>
-                            <span>@post.CountAllComments()</span>
-                        </button>
-                    </div>
-                </div>
+                <ContentActionRow 
+                    CommentCount="@post.CountAllComments()"
+                    VotesUp="@postVoteUps"
+                    CurrentVote="currentVote"
+                    OnToggleComments="@(() => isShowingComments = !isShowingComments)"
+                    OnVoteUp="VoteUp"
+                    OnVoteDown="VoteDown"/>
             </div>
             @if (isShowingComments)
             {
-                <RadzenTextArea bind-Value="@newComment" Change=@(args => newComment = args)></RadzenTextArea>
-                <button @onclick="AddCommentAsync" class="new-comment-button">
-                    <span class="oi oi-plus"></span>
-                    Add a comment
-                </button>
+                <textarea class="mt-4" @bind="@newCommentBody" @oninput="@(args => newCommentBody = args.Value?.ToString())"></textarea>
+                <div class="d-flex justify-content-end mt-3">
+                    <button @onclick="AddCommentAsync" class="new-comment-button primary-button">
+                        <span class="oi oi-plus"></span>
+                        Add a comment
+                    </button>
+                </div>
                 
                 <div class="comments-box">
-                    @foreach (var comment in post.Comments)
+                    @foreach (var comment in post.Comments.OrderByDescending(c => c.CreatedAt))
                     {
-                        <CommentBox UserEmail="@userEmail" Comment="comment"/>
+                        <CommentBox UserEmail="@userEmail" Comment="comment" Post="post"/>
                     }
                 </div>
             }
@@ -75,15 +59,14 @@
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
+    [Parameter] public int PostId { get; set; }
+    private Post? post;
+    
+    private string newCommentBody;
 
     private string userEmail;
     private int postVoteUps;
-    private string newComment;
-
-    [Parameter] public int PostId { get; set; }
-    private Post? post;
     private VoteAction? currentVote;
-
     private bool isShowingComments;
 
     protected override async Task OnInitializedAsync()
@@ -95,34 +78,6 @@
         UpdatePostVoteUps();
         UpdateCurrentVote();
     }
-
-    private async Task AddCommentAsync()
-    {
-        try
-        {
-            newComment = "";
-            await commentService.CreateAsync(new CommentCreationDto()
-            {
-                CommentBody = newComment,
-                OwnerEmail = userEmail,
-                PostId = post!.Id
-            });
-            
-            post = await postService.GetByIdAsync(post.Id);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            notificationService.Notify(new NotificationMessage()
-            {
-                Severity = NotificationSeverity.Error,
-                Duration = 6000,
-                Detail = e.Message
-            });
-        }
-    }
-
-    
 
     private void UpdatePostVoteUps()
     {
@@ -141,6 +96,32 @@
     private void VoteDown()
     {
         Vote(VoteAction.VoteDown);
+    }
+    
+    private async Task AddCommentAsync()
+    {
+        try
+        {
+            await commentService.CreateAsync(new CommentCreationDto()
+            {
+                CommentBody = newCommentBody,
+                OwnerEmail = userEmail,
+                PostId = post!.Id
+            });
+            
+            post = await postService.GetByIdAsync(post.Id);
+            newCommentBody = "";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
     }
 
     private async void Vote(VoteAction voteAction)

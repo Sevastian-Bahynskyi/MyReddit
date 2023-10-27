@@ -47,7 +47,7 @@ public class HttpPostClient : IPostService
         return await HttpClientHelper.GenerateObjectFromJson<Post>(content);
     }
 
-    public Task DeleteAsync(int id)
+    public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();
     }

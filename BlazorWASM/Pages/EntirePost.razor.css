@@ -1,7 +1,3 @@
-.action-area{
-    margin-inline: 1rem;
-}
-
 .entire-post-container{
     width: 30%;
 }
@@ -27,43 +23,4 @@
 .comments-box{
     margin-top: 2em;
     width: 100%;
-}
-
-
-.vote-area{
-    --up-arrow-color: #d93a00;
-    --down-arrow-color: #6a5cff;
-}
-
-.vote-area span{
-    margin-inline: 0.3em;
-}
-
-.vote-area, .comment-area{
-    text-align: center;
-    background-color: var(--bg-primary-colder-color);
-    width: fit-content;
-    border-radius: 16px;
-    padding: 3px 5px;
-}
-
-
-.vote-area button, .comment-area button{
-    outline: none;
-    border: none;
-    background: transparent;
-    padding: 0;
-    margin: 0;
-}
-
-.vote-area button:hover .upvote{
-    color: var(--up-arrow-color)
-}
-
-.vote-area button:hover .downvote{
-    color: var(--down-arrow-color)
-}
-
-.new-comment-button{
-    margin-right: auto;
 }

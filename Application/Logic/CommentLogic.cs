@@ -1,6 +1,7 @@
 using Application.LogicInterfaces;
 using Domain.DTOs;
 using Domain.Models;
+using Domain.Models.Votes;
 
 namespace Application.Logic;
 
@@ -33,7 +34,9 @@ public class CommentLogic : ICommentLogic
         Comment comment = new Comment()
         {
             CommentBody = creationDto.CommentBody,
-            Owner = existing
+            Owner = existing,
+            CreatedAt = DateTime.Now,
+            Votes = new PostVotes()
         };
         if (creationDto.CommentId != null)
             comment.ReplyToCommentId = creationDto.CommentId;

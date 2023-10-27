@@ -9,7 +9,8 @@ public class Comment : IHasComments
     public List<Comment> Replies { get; set; } = new();
     public string CommentBody { get; set; }
     public User Owner { get; init; }
-    public PostVotes Votes { get; set; } = new ();
+    public DateTime CreatedAt { get; set; }
+    public PostVotes Votes { get; set; }
     
     public Comment? FindACommentById(int id)
     {
@@ -53,7 +54,7 @@ public class Comment : IHasComments
 
     
     
-    public Comment? RemoveCommentById(int id)
+    public IHasComments? RemoveCommentById(int id)
     {
         if(Replies.RemoveAll(comment => comment.Id == id) > 0)
             return this;

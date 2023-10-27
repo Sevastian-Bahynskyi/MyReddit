@@ -54,10 +54,10 @@ public class Post : IHasComments
 
     
     
-    public Comment? RemoveCommentById(int id)
+    public IHasComments? RemoveCommentById(int id)
     {
         if(Comments.RemoveAll(comment => comment.Id == id) > 0)
-            return null;
+            return this;
         Comment? toReturn = null;
         Comments.ForEach(reply => toReturn = RemoveReplyById(id, reply));
         return toReturn;

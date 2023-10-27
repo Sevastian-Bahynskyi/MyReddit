@@ -71,10 +71,16 @@ public class CommentFileDao: ICommentDao
             var parentComment = post.RemoveCommentById(comment.Id);
             if (parentComment != null)
             {
-                parentComment.Replies.Add(comment);
+                if(parentComment.GetType() == typeof(Post))
+                    post.Comments.Add(comment);
+                else
+                {
+                    ((Comment)parentComment).Replies.Add(comment);
+                }
+                context.SaveChanges();
+                return Task.CompletedTask;
             }
         }
-        context.SaveChanges();
         return Task.CompletedTask;
     }
 }

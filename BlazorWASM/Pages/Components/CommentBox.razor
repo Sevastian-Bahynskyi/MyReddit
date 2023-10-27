@@ -12,36 +12,30 @@
     <p><a href="favicon.png">@Comment.Owner.Username</a></p>
     <p>@Comment.CommentBody</p>
     
-    <div class="post-bottom-row d-flex flex-row justify-content-end">
-        <div class="vote-area action-area d-flex flex-row align-items-center justify-content-between">
-            @{
-                string styleUpArrow = "";
-                string styleDownArrow = "";
-                if (currentVote == VoteAction.VoteUp)
-                {
-                    styleUpArrow = "color: var(--up-arrow-color);";
-                }
-                else if(currentVote == VoteAction.VoteDown)
-                {
-                    styleDownArrow = "color: var(--down-arrow-color);";
-                }
-                <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
-                <span>@contentVotesUp</span>
-                <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
-            }
-        </div>
-        <div class="comment-area action-area">
-            <button @onclick="@(() => isShowingComments = !isShowingComments)">
-                <span class="fa fa-comment"></span>
-                <span>@Comment.CountAllComments()</span>
+    <ContentActionRow 
+        CommentCount="@Comment.CountAllComments()"
+        VotesUp="@commentVoteUps"
+        CurrentVote="currentVote"
+        OnToggleComments="@(() => isShowingComments = !isShowingComments)"
+        OnVoteUp="VoteUp"
+        OnVoteDown="VoteDown"/>
+    
+    @if (isShowingComments)
+    {
+        <textarea class="mt-4" @bind="@commentBody" @oninput="@(args => commentBody = args.Value?.ToString())"></textarea>
+        <div class="d-flex justify-content-end mt-3">
+            <button @onclick="AddCommentAsync" class="new-comment-button primary-button">
+                <span class="oi oi-plus"></span>
+                Add a comment
             </button>
         </div>
-    </div>
-
-    @foreach (var reply in Comment.Replies)
-    {
-        <CommentBox UserEmail="@UserEmail" Class="with-margin" Comment="@reply"/>
+        
+        @foreach (var reply in Comment.Replies)
+        {
+            <CommentBox UserEmail="@UserEmail" Class="with-margin" Comment="@reply" Post="@Post"/>
+        }
     }
+    
 </div>
 
 
@@ -54,15 +48,51 @@
         set => _class = $"{_class} {value}";
     }
     [Parameter] public Comment Comment { get; set; }
+    [Parameter] public Post Post { get; set; }
     [Parameter] public string UserEmail { get; set; }
-    private bool isShowingComments;
-    private int contentVotesUp;
+    private int commentVoteUps;
     private VoteAction? currentVote;
+    private bool isShowingComments;
+    private string commentBody;
+
+
+    protected override void OnInitialized()
+    {
+        UpdateCommentVoteUps();
+        UpdateCurrentVote();
+    }
+
+    private async Task AddCommentAsync()
+    {
+        try
+        {
+            await commentService.CreateAsync(new CommentCreationDto()
+            {
+                CommentBody = commentBody,
+                OwnerEmail = UserEmail,
+                PostId = Post.Id,
+                CommentId = Comment.Id
+            });
+
+            
+            commentBody = "";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            notificationService.Notify(new NotificationMessage()
+            {
+                Severity = NotificationSeverity.Error,
+                Duration = 6000,
+                Detail = e.Message
+            });
+        }
+    }
 
     
-    private void UpdateContentVoteUps()
+    private void UpdateCommentVoteUps()
     {
-        contentVotesUp = Comment.Votes.PositiveVotesNumber;
+        commentVoteUps = Comment.Votes.PositiveVotesNumber;
     }
     private void UpdateCurrentVote()
     {
@@ -88,7 +118,7 @@
                 VoteAction = new ContentVote { OwnerEmail = UserEmail, Vote = voteAction }
             };
             Comment = await commentService.UpdateAsync(updateDto);
-            UpdateContentVoteUps();
+            UpdateCommentVoteUps();
             UpdateCurrentVote();
             StateHasChanged();
         }

@@ -1,0 +1,67 @@
+@using Domain.Models.Votes
+@using HttpClients.ClientInterfaces
+@using Domain.DTOs
+@using Domain.Models
+@inject ICommentService commentService
+<div class="post-bottom-row d-flex flex-row justify-content-start">
+    <div class="vote-area action-area d-flex flex-row align-items-center justify-content-between">
+        @{
+            string styleUpArrow = "";
+            string styleDownArrow = "";
+            if (CurrentVote == VoteAction.VoteUp)
+            {
+                styleUpArrow = "color: var(--up-arrow-color);";
+            }
+            else if (CurrentVote == VoteAction.VoteDown)
+            {
+                styleDownArrow = "color: var(--down-arrow-color);";
+            }
+            <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
+            <span>@VotesUp</span>
+            <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
+        }
+    </div>
+    <div class="comment-area px-2 action-area">
+        <button @onclick="ToggleComments">
+            <span class="fa fa-comment"></span>
+            <span>@CommentCount</span>
+        </button>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter] public int VotesUp { get; set; }
+    [Parameter] public int CommentCount { get; set; }
+    [Parameter] public VoteAction? CurrentVote { get; set; }
+    [Parameter] public EventCallback OnVoteUp { get; set; }
+    [Parameter] public EventCallback OnVoteDown { get; set; }
+    [Parameter] public EventCallback OnToggleComments { get; set; }
+    private bool isShowingComments;
+
+    private async Task VoteUp()
+    {
+        if (OnVoteUp.HasDelegate)
+        {
+            await OnVoteUp.InvokeAsync();
+        }
+    }
+    
+    private async Task VoteDown()
+    {
+        if (OnVoteDown.HasDelegate)
+        {
+            await OnVoteDown.InvokeAsync();
+        }
+    }
+
+    private async Task ToggleComments()
+    {
+        if (OnToggleComments.HasDelegate)
+        {
+            await OnToggleComments.InvokeAsync();
+            isShowingComments = !isShowingComments;
+        }
+    }
+}
