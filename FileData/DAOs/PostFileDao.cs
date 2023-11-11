@@ -39,7 +39,6 @@ public class PostFileDao : IPostDao
     public async Task UpdateAsync(Post post)
     {
         Post? existing = await GetByIdAsync(post.Id);
-
         context.Data!.Posts.Remove(existing!);
         context.Data.Posts.Add(post);
         context.SaveChanges();

@@ -32,13 +32,18 @@
 
 
 @code {
-    [Parameter] public int VotesUp { get; set; }
     [Parameter] public int CommentCount { get; set; }
+    [Parameter] public int VotesUp { get; set; }
     [Parameter] public VoteAction? CurrentVote { get; set; }
     [Parameter] public EventCallback OnVoteUp { get; set; }
     [Parameter] public EventCallback OnVoteDown { get; set; }
     [Parameter] public EventCallback OnToggleComments { get; set; }
     private bool isShowingComments;
+    
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"log: {VotesUp}");
+    }
 
     private async Task VoteUp()
     {

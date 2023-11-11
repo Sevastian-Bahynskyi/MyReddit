@@ -8,7 +8,7 @@
     {
         foreach (var post in PostList)
         {
-            <div class="post-card" @onclick="@(() => navManager.NavigateTo($"/EntirePost/{post.Id}"))">
+            <div class="post-card card" @onclick="@(() => navManager.NavigateTo($"/EntirePost/{post.Id}"))">
                 <div class="post-top-row d-flex flex-row">
                     <p>@post.Owner.Username</p>
                 </div>

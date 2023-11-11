@@ -47,4 +47,20 @@ public class CommentController: ControllerBase
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Comment>> GetById([FromRoute] int id)
+    {
+        try
+        {
+            Comment comment = await logic.GetByIdAsync(id);
+            return Ok(comment);
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
+    }
 }

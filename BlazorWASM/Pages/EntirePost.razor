@@ -26,13 +26,14 @@
                 </div>
                 <h1>@post.Title</h1>
                 <p>@post.Description</p>
-                <ContentActionRow 
-                    CommentCount="@post.CountAllComments()"
-                    VotesUp="@postVoteUps"
-                    CurrentVote="currentVote"
-                    OnToggleComments="@(() => isShowingComments = !isShowingComments)"
-                    OnVoteUp="VoteUp"
-                    OnVoteDown="VoteDown"/>
+                
+                <ContentActionRow
+                        CommentCount="@post.CountAllComments()"
+                        CurrentVote="currentVote"
+                        VotesUp="post.Votes.VotesNumber"
+                        OnToggleComments="@(() => isShowingComments = !isShowingComments)"
+                        OnVoteUp="VoteUp"
+                        OnVoteDown="VoteDown"/>
             </div>
             @if (isShowingComments)
             {
@@ -81,7 +82,7 @@
 
     private void UpdatePostVoteUps()
     {
-        postVoteUps = post!.Votes.PositiveVotesNumber;
+        postVoteUps = post!.Votes.VotesNumber;
     }
     private void UpdateCurrentVote()
     {
@@ -111,6 +112,10 @@
             
             post = await postService.GetByIdAsync(post.Id);
             newCommentBody = "";
+            
+            UpdateCurrentVote();
+            UpdatePostVoteUps();
+            StateHasChanged();
         }
         catch (Exception e)
         {

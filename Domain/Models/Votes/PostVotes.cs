@@ -5,12 +5,13 @@ public class PostVotes
     private List<ContentVote> votes;
     public IEnumerable<ContentVote> Votes
     {
-        get { return votes;}
-        set { votes = value.ToList(); }
+        get => votes;
+        set => votes = value.ToList();
     }
 
-    public int PositiveVotesNumber => votes.Count(v => v.Vote == VoteAction.VoteUp);
-    public int NegativeVotesNumber => votes.Count(v => v.Vote == VoteAction.VoteDown);
+    public int VotesNumber => positiveVotesNumber >= negativeVotesNumber? positiveVotesNumber : -negativeVotesNumber;
+    private int positiveVotesNumber => votes.Count(v => v.Vote == VoteAction.VoteUp);
+    private int negativeVotesNumber => votes.Count(v => v.Vote == VoteAction.VoteDown);
 
     public PostVotes()
     {

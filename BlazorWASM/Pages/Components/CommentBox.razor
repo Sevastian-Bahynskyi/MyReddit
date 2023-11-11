@@ -12,17 +12,18 @@
     <p><a href="favicon.png">@Comment.Owner.Username</a></p>
     <p>@Comment.CommentBody</p>
     
-    <ContentActionRow 
+    <ContentActionRow
         CommentCount="@Comment.CountAllComments()"
-        VotesUp="@commentVoteUps"
         CurrentVote="currentVote"
+        VotesUp="Comment.Votes.VotesNumber"
         OnToggleComments="@(() => isShowingComments = !isShowingComments)"
         OnVoteUp="VoteUp"
         OnVoteDown="VoteDown"/>
     
+    
     @if (isShowingComments)
     {
-        <textarea class="mt-4" @bind="@commentBody" @oninput="@(args => commentBody = args.Value?.ToString())"></textarea>
+        <textarea class="mt-4" @bind="@commentBody"></textarea>
         <div class="d-flex justify-content-end mt-3">
             <button @onclick="AddCommentAsync" class="new-comment-button primary-button">
                 <span class="oi oi-plus"></span>
@@ -56,10 +57,13 @@
     private string commentBody;
 
 
-    protected override void OnInitialized()
+    protected override void OnAfterRender(bool firstRender)
     {
-        UpdateCommentVoteUps();
-        UpdateCurrentVote();
+        if (firstRender)
+        {
+            UpdateCommentVoteUps();
+            UpdateCurrentVote();
+        }
     }
 
     private async Task AddCommentAsync()
@@ -73,9 +77,11 @@
                 PostId = Post.Id,
                 CommentId = Comment.Id
             });
-
+            UpdateCommentVoteUps();
+            UpdateCurrentVote();
             
             commentBody = "";
+            StateHasChanged();
         }
         catch (Exception e)
         {
@@ -92,7 +98,7 @@
     
     private void UpdateCommentVoteUps()
     {
-        commentVoteUps = Comment.Votes.PositiveVotesNumber;
+        commentVoteUps = Comment.Votes.VotesNumber;
     }
     private void UpdateCurrentVote()
     {
@@ -117,7 +123,8 @@
             {
                 VoteAction = new ContentVote { OwnerEmail = UserEmail, Vote = voteAction }
             };
-            Comment = await commentService.UpdateAsync(updateDto);
+            await commentService.UpdateAsync(updateDto);
+            Comment = await commentService.GetByIdAsync(Comment.Id);
             UpdateCommentVoteUps();
             UpdateCurrentVote();
             StateHasChanged();
@@ -133,5 +140,4 @@
             });
         }
     }
-
 }

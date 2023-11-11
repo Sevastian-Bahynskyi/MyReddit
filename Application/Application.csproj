@@ -4,10 +4,12 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <UserSecretsId>16f17669-4d32-402c-85a2-a92eab9a481c</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
+
 
 </Project>

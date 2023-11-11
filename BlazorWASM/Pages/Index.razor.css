@@ -1,11 +1,9 @@
 .create-post{
-    width: fit-content;
-    position: fixed;
-    right: 0;
+    width: 100%;
 }
 
 .primary-button{
     border-radius: 16px;
-    transform: scale(1.2);
+    transform: scale(1);
     margin-right: 2em;
 }
