@@ -29,15 +29,15 @@
                 
                 <ContentActionRow
                         CommentCount="@post.CountAllComments()"
-                        CurrentVote="currentVote"
-                        VotesUp="post.Votes.VotesNumber"
+                        CurrentVoteState="post.Votes.UserCurrentVote(userEmail)"
+                        VotesNumber="post.Votes.VotesNumber"
                         OnToggleComments="@(() => isShowingComments = !isShowingComments)"
-                        OnVoteUp="VoteUp"
-                        OnVoteDown="VoteDown"/>
+                        OnVoteUp="@(async () => await Vote(VoteAction.VoteUp))"
+                        OnVoteDown="@(async () => await Vote(VoteAction.VoteDown))"/>
             </div>
             @if (isShowingComments)
             {
-                <textarea class="mt-4" @bind="@newCommentBody" @oninput="@(args => newCommentBody = args.Value?.ToString())"></textarea>
+                <textarea class="mt-4" @bind="newCommentBody" @bind:after="OnTextFieldChanged" @bind:event="oninput"></textarea>
                 <div class="d-flex justify-content-end mt-3">
                     <button @onclick="AddCommentAsync" class="new-comment-button primary-button">
                         <span class="oi oi-plus"></span>
@@ -62,12 +62,10 @@
     public Task<AuthenticationState> AuthState { get; set; } = null!;
     [Parameter] public int PostId { get; set; }
     private Post? post;
-    
+
     private string newCommentBody;
 
     private string userEmail;
-    private int postVoteUps;
-    private VoteAction? currentVote;
     private bool isShowingComments;
 
     protected override async Task OnInitializedAsync()
@@ -76,29 +74,18 @@
         ClaimsPrincipal claims = authState.User;
         userEmail = claims.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         post = await postService.GetByIdAsync(PostId);
-        UpdatePostVoteUps();
-        UpdateCurrentVote();
     }
 
-    private void UpdatePostVoteUps()
+    private async void OnTextFieldChanged()
     {
-        postVoteUps = post!.Votes.VotesNumber;
+        post = await postService.GetByIdAsync(post!.Id);
+        StateHasChanged();
     }
-    private void UpdateCurrentVote()
-    {
-        currentVote = post!.Votes.UserCurrentVote(userEmail);
-    }
+
     
-    private void VoteUp()
-    {
-        Vote(VoteAction.VoteUp);
-    }
     
-    private void VoteDown()
-    {
-        Vote(VoteAction.VoteDown);
-    }
-    
+
+
     private async Task AddCommentAsync()
     {
         try
@@ -110,11 +97,9 @@
                 PostId = post!.Id
             });
             
+            
             post = await postService.GetByIdAsync(post.Id);
             newCommentBody = "";
-            
-            UpdateCurrentVote();
-            UpdatePostVoteUps();
             StateHasChanged();
         }
         catch (Exception e)
@@ -129,7 +114,7 @@
         }
     }
 
-    private async void Vote(VoteAction voteAction)
+    private async Task Vote(VoteAction voteAction)
     {
         try
         {
@@ -138,9 +123,7 @@
                 VoteAction = new ContentVote { OwnerEmail = userEmail, Vote = voteAction }
             };
             post = await postService.UpdateAsync(updateDto);
-            UpdatePostVoteUps();
-            UpdateCurrentVote();
-            StateHasChanged();
+            StateHasChanged(); 
         }
         catch (Exception e)
         {

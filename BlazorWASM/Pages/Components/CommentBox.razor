@@ -7,6 +7,7 @@
 @namespace BlazorWASM.Pages.Components
 @inject ICommentService commentService
 @inject NotificationService notificationService
+@inject IPostService postService
 
 <div class="@Class">
     <p><a href="favicon.png">@Comment.Owner.Username</a></p>
@@ -14,18 +15,18 @@
     
     <ContentActionRow
         CommentCount="@Comment.CountAllComments()"
-        CurrentVote="currentVote"
-        VotesUp="Comment.Votes.VotesNumber"
+        CurrentVoteState="Comment.Votes.UserCurrentVote(UserEmail)"
+        VotesNumber="Comment.Votes.VotesNumber"
         OnToggleComments="@(() => isShowingComments = !isShowingComments)"
-        OnVoteUp="VoteUp"
-        OnVoteDown="VoteDown"/>
+        OnVoteUp="@(async () => await Vote(VoteAction.VoteUp))"
+        OnVoteDown="@(async () => await Vote(VoteAction.VoteDown))"/>
     
     
     @if (isShowingComments)
     {
         <textarea class="mt-4" @bind="@commentBody"></textarea>
         <div class="d-flex justify-content-end mt-3">
-            <button @onclick="AddCommentAsync" class="new-comment-button primary-button">
+            <button @onclick="@(async () => await AddCommentAsync())" class="new-comment-button primary-button">
                 <span class="oi oi-plus"></span>
                 Add a comment
             </button>
@@ -51,20 +52,10 @@
     [Parameter] public Comment Comment { get; set; }
     [Parameter] public Post Post { get; set; }
     [Parameter] public string UserEmail { get; set; }
-    private int commentVoteUps;
-    private VoteAction? currentVote;
     private bool isShowingComments;
     private string commentBody;
+    
 
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            UpdateCommentVoteUps();
-            UpdateCurrentVote();
-        }
-    }
 
     private async Task AddCommentAsync()
     {
@@ -77,11 +68,11 @@
                 PostId = Post.Id,
                 CommentId = Comment.Id
             });
-            UpdateCommentVoteUps();
-            UpdateCurrentVote();
+
+            Comment = await commentService.GetByIdAsync(Comment.Id);
+            StateHasChanged();
             
             commentBody = "";
-            StateHasChanged();
         }
         catch (Exception e)
         {
@@ -94,28 +85,9 @@
             });
         }
     }
+    
 
-    
-    private void UpdateCommentVoteUps()
-    {
-        commentVoteUps = Comment.Votes.VotesNumber;
-    }
-    private void UpdateCurrentVote()
-    {
-        currentVote = Comment.Votes.UserCurrentVote(UserEmail);
-    }
-    
-    private void VoteUp()
-    {
-        Vote(VoteAction.VoteUp);
-    }
-    
-    private void VoteDown()
-    {
-        Vote(VoteAction.VoteDown);
-    }
-
-    private async void Vote(VoteAction voteAction)
+    private async Task Vote(VoteAction voteAction)
     {
         try
         {
@@ -125,9 +97,8 @@
             };
             await commentService.UpdateAsync(updateDto);
             Comment = await commentService.GetByIdAsync(Comment.Id);
-            UpdateCommentVoteUps();
-            UpdateCurrentVote();
-            StateHasChanged();
+            Post = await postService.GetByIdAsync(Post.Id);
+            // StateHasChanged();
         }
         catch (Exception e)
         {

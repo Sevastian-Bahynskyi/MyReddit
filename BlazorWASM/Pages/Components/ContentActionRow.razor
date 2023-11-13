@@ -8,16 +8,19 @@
         @{
             string styleUpArrow = "";
             string styleDownArrow = "";
-            if (CurrentVote == VoteAction.VoteUp)
+            if (CurrentVoteState.HasValue)
             {
-                styleUpArrow = "color: var(--up-arrow-color);";
-            }
-            else if (CurrentVote == VoteAction.VoteDown)
-            {
-                styleDownArrow = "color: var(--down-arrow-color);";
+                if (CurrentVoteState == VoteAction.VoteUp)
+                {
+                    styleUpArrow = "color: var(--up-arrow-color);";
+                }
+                else if (CurrentVoteState == VoteAction.VoteDown)
+                {
+                    styleDownArrow = "color: var(--down-arrow-color);";
+                }
             }
             <button @onclick="VoteUp"><span style="@styleUpArrow" class="upvote oi oi-arrow-top"></span></button>
-            <span>@VotesUp</span>
+            <span>@VotesNumber</span>
             <button @onclick="VoteDown"><span style="@styleDownArrow" class="downvote oi oi-arrow-bottom"></span></button>
         }
     </div>
@@ -33,8 +36,8 @@
 
 @code {
     [Parameter] public int CommentCount { get; set; }
-    [Parameter] public int VotesUp { get; set; }
-    [Parameter] public VoteAction? CurrentVote { get; set; }
+    [Parameter] public int VotesNumber { get; set; }
+    [Parameter] public VoteAction? CurrentVoteState { get; set; }
     [Parameter] public EventCallback OnVoteUp { get; set; }
     [Parameter] public EventCallback OnVoteDown { get; set; }
     [Parameter] public EventCallback OnToggleComments { get; set; }
@@ -42,7 +45,7 @@
     
     protected override void OnAfterRender(bool firstRender)
     {
-        Console.WriteLine($"log: {VotesUp}");
+        Console.WriteLine($"log: {VotesNumber}");
     }
 
     private async Task VoteUp()
