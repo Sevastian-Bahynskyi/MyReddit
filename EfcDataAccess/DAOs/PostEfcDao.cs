@@ -6,6 +6,8 @@ namespace EfcDataAccess.DAOs;
 
 public class PostEfcDao : IPostDao
 {
+    private readonly MyRedditContext context;
+
     public Task<Post> CreateAsync(Post post)
     {
         throw new NotImplementedException();
