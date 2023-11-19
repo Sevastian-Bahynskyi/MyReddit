@@ -40,7 +40,7 @@ public class UserLogic: IUserLogic
         }
             
         ValidateUserInput(registrationDto.Email, registrationDto.Username, registrationDto.Password);
-        User user = new User()
+        User user = new User 
         {
             Password = registrationDto.Password,
             Username = registrationDto.Username,

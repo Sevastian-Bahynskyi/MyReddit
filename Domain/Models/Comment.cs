@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
 using Domain.Models.Votes;
 
 namespace Domain.Models;
 
 public class Comment : IHasComments
 {
+    [Key]
     public int Id { get; set; }
     public int? ReplyToCommentId { get; set; }
     public List<Comment> Replies { get; set; } = new();
@@ -11,6 +13,7 @@ public class Comment : IHasComments
     public User Owner { get; init; }
     public DateTime CreatedAt { get; set; }
     public PostVotes Votes { get; set; }
+    
     
     public Comment? FindACommentById(int id)
     {

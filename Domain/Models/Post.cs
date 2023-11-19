@@ -1,15 +1,16 @@
+using System.ComponentModel.DataAnnotations;
 using Domain.Models.Votes;
 
 namespace Domain.Models;
 
 public class Post : IHasComments
 {
+    [Key]
     public int Id { get; set; }
     public User Owner { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime CreatedAt { get; set; }
-    
     
     public List<Comment> Comments { get; set; }
     public PostVotes Votes { get; set; }

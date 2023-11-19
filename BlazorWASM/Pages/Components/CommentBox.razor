@@ -98,7 +98,7 @@
             await commentService.UpdateAsync(updateDto);
             Comment = await commentService.GetByIdAsync(Comment.Id);
             Post = await postService.GetByIdAsync(Post.Id);
-            // StateHasChanged();
+            StateHasChanged();
         }
         catch (Exception e)
         {

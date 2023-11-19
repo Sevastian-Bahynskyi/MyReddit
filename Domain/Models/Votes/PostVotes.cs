@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Domain.Models.Votes;
 
 public class PostVotes
 {
+    [Key]
+    public int Id { get; set; }
     private List<ContentVote> votes;
     public IEnumerable<ContentVote> Votes
     {

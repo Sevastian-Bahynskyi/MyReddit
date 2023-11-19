@@ -3150,6 +3150,23 @@
             ],
             "VotesNumber": -1
           }
+        },
+        {
+          "Id": 130,
+          "ReplyToCommentId": null,
+          "Replies": [],
+          "CommentBody": "dddddddddddddddddddd",
+          "Owner": {
+            "Id": 1,
+            "Email": "dummy1@gmail.com",
+            "Username": "Sevastian",
+            "Password": "password_test"
+          },
+          "CreatedAt": "2023-11-13T19:43:53.0775644+01:00",
+          "Votes": {
+            "Votes": [],
+            "VotesNumber": 0
+          }
         }
       ],
       "Votes": {
@@ -3159,6 +3176,6 @@
     }
   ],
   "LastUserId": 9,
-  "LastCommentId": 129,
+  "LastCommentId": 130,
   "LastPostId": 27
 }
