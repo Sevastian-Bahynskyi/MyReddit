@@ -1,6 +1,7 @@
 using Application.LogicInterfaces;
 using Domain.DTOs;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EfcDataAccess.DAOs;
 
@@ -8,9 +9,16 @@ public class PostEfcDao : IPostDao
 {
     private readonly MyRedditContext context;
 
-    public Task<Post> CreateAsync(Post post)
+    public PostEfcDao(MyRedditContext context)
     {
-        throw new NotImplementedException();
+        this.context = context;
+    }
+
+    public async Task<Post> CreateAsync(Post post)
+    {
+        EntityEntry<Post> created = await context.Posts.AddAsync(post);
+        await context.SaveChangesAsync();
+        return created.Entity;
     }
 
     public Task<IEnumerable<Post>> GetAllAsync(SearchPostParametersDto searchPostDto)
