@@ -1,6 +1,7 @@
 using Application.LogicInterfaces;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EfcDataAccess.DAOs;
 
@@ -23,12 +24,15 @@ public class CommentEfcDao : ICommentDao
         }
         else
         {
+            if (post.Comments == null)
+                post.Comments = new List<Comment>();
             post.Comments.Add(comment);
         }
 
         context.Posts.Update(post);
+        EntityEntry<Comment> created = await context.Comments.AddAsync(comment);
         await context.SaveChangesAsync();
-        return comment;
+        return created.Entity;
     }
 
     public Task<bool> DeleteAsync(int commentId)
@@ -36,9 +40,9 @@ public class CommentEfcDao : ICommentDao
         throw new NotImplementedException();
     }
 
-    public Task<Comment?> GetByIdAsync(int commentId)
+    public async Task<Comment?> GetByIdAsync(int commentId)
     {
-        throw new NotImplementedException();
+        return await context.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
     }
 
     public Task UpdateAsync(Comment comment)

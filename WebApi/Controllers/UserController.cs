@@ -71,6 +71,7 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.StackTrace);
             return BadRequest(e.Message);
         }
     }

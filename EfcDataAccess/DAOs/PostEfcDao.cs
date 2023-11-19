@@ -1,6 +1,7 @@
 using Application.LogicInterfaces;
 using Domain.DTOs;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace EfcDataAccess.DAOs;
@@ -26,14 +27,15 @@ public class PostEfcDao : IPostDao
         throw new NotImplementedException();
     }
 
-    public Task<Post?> GetAsync(string postTitle, string ownerEmail)
+    public async Task<Post?> GetAsync(string postTitle, string ownerEmail)
     {
-        throw new NotImplementedException();
+        return await context.Posts.FirstOrDefaultAsync(p => p.Title.Equals(postTitle) &&
+               p.Owner.Email.Equals(ownerEmail));
     }
 
-    public Task<Post?> GetByIdAsync(int id)
+    public async Task<Post?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await context.Posts.FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public Task UpdateAsync(Post post)
