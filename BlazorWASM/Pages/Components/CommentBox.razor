@@ -15,8 +15,8 @@
     
     <ContentActionRow
         CommentCount="@Comment.CountAllComments()"
-        CurrentVoteState="Comment.Votes.UserCurrentVote(UserEmail)"
-        VotesNumber="Comment.Votes.VotesNumber"
+        CurrentVoteState="Comment.Votes != null? Comment.Votes.UserCurrentVote(UserEmail) : VoteAction.VoteUp"
+        VotesNumber="Comment.Votes != null? Comment.Votes.VotesNumber : 0"
         OnToggleComments="@(() => isShowingComments = !isShowingComments)"
         OnVoteUp="@(async () => await Vote(VoteAction.VoteUp))"
         OnVoteDown="@(async () => await Vote(VoteAction.VoteDown))"/>
@@ -54,7 +54,17 @@
     [Parameter] public string UserEmail { get; set; }
     private bool isShowingComments;
     private string commentBody;
-    
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+
+
+    protected override void OnParametersSet()
+    {
+        int i = 0;
+    }
 
 
     private async Task AddCommentAsync()

@@ -1,21 +1,26 @@
 using Application.LogicInterfaces;
 using Domain.Models;
+using Domain.Models.Votes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace EfcDataAccess.DAOs;
 
 public class CommentEfcDao : ICommentDao
 {
     private readonly MyRedditContext context;
+    private IPostDao postDao;
 
-    public CommentEfcDao(MyRedditContext context)
+    public CommentEfcDao(MyRedditContext context, IPostDao postDao)
     {
         this.context = context;
+        this.postDao = postDao;
     }
     public async Task<Comment> CreateAsync(Comment comment, int postId)
     {
-        Post post = (await context.Posts.FirstOrDefaultAsync(p => p.Id == postId))!;
+        Post post = (await postDao.GetByIdAsync(postId))!;
+        comment.Votes = new PostVotes();
         
         if (comment.ReplyToCommentId != null)
         {
@@ -24,8 +29,6 @@ public class CommentEfcDao : ICommentDao
         }
         else
         {
-            if (post.Comments == null)
-                post.Comments = new List<Comment>();
             post.Comments.Add(comment);
         }
 
@@ -35,18 +38,29 @@ public class CommentEfcDao : ICommentDao
         return created.Entity;
     }
 
-    public Task<bool> DeleteAsync(int commentId)
+    public async Task<bool> DeleteAsync(int commentId)
     {
-        throw new NotImplementedException();
+        var comment = await GetByIdAsync(commentId);
+        var resultEntity = context.Comments.Remove(comment!);
+        await context.SaveChangesAsync();
+        return resultEntity.State == EntityState.Deleted;
     }
 
     public async Task<Comment?> GetByIdAsync(int commentId)
     {
-        return await context.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
+        return await context.Comments
+            .Include(c => c.Owner)
+            .Include(c => c.Replies)
+                .ThenInclude(reply => reply.Replies)
+                .ThenInclude(reply => reply.Owner)
+            .Include(c => c.Votes)
+                .ThenInclude(votes => votes.Votes)
+            .FirstOrDefaultAsync(c => c.Id == commentId);
     }
 
-    public Task UpdateAsync(Comment comment)
+    public async Task UpdateAsync(Comment comment)
     {
-        throw new NotImplementedException();
+        context.Comments.Update(comment);
+        await context.SaveChangesAsync();
     }
 }

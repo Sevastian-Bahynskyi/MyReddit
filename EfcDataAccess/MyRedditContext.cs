@@ -1,4 +1,5 @@
 using Domain.Models;
+using Domain.Models.Votes;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfcDataAccess;
@@ -19,6 +20,8 @@ public class MyRedditContext : DbContext
     {
         modelBuilder.Entity<Post>().HasKey(post => post.Id);
         modelBuilder.Entity<User>().HasKey(user => user.Id);
+        modelBuilder.Entity<PostVotes>().HasKey(postVotes => postVotes.Id);
+        modelBuilder.Entity<ContentVote>().HasKey(contentVote => contentVote.Id);
         modelBuilder.Entity<Comment>().HasKey(comment => comment.Id);
     }
 }

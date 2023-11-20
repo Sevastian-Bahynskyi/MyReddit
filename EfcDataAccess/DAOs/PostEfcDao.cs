@@ -24,22 +24,39 @@ public class PostEfcDao : IPostDao
 
     public Task<IEnumerable<Post>> GetAllAsync(SearchPostParametersDto searchPostDto)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(context.Posts
+            .Include(post => post.Owner)
+            .Include(post => post.Comments)
+            .Include(post => post.Votes)
+            .AsQueryable().AsEnumerable());
     }
 
     public async Task<Post?> GetAsync(string postTitle, string ownerEmail)
     {
-        return await context.Posts.FirstOrDefaultAsync(p => p.Title.Equals(postTitle) &&
+        return await context.Posts
+            .Include(post => post.Owner)
+            .Include(post => post.Comments)
+            .Include(post => post.Votes)
+            .FirstOrDefaultAsync(p => p.Title.Equals(postTitle) &&
                p.Owner.Email.Equals(ownerEmail));
     }
 
     public async Task<Post?> GetByIdAsync(int id)
     {
-        return await context.Posts.FirstOrDefaultAsync(p => p.Id == id);
+        return await context.Posts
+            .Include(post => post.Owner)
+            .Include(post => post.Comments)
+                .ThenInclude(comment => comment.Replies)
+                .ThenInclude(comment => comment.Votes)
+                .Include(comment => comment.Owner)
+            .Include(post => post.Votes)
+                .ThenInclude(vote => vote.Votes)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public Task UpdateAsync(Post post)
+    public async Task UpdateAsync(Post post)
     {
-        throw new NotImplementedException();
+        context.Posts.Update(post);
+        await context.SaveChangesAsync();
     }
 }

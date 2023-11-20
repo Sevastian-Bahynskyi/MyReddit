@@ -26,5 +26,6 @@
     protected override async Task OnInitializedAsync()
     {
         PostList = await postService.GetAsync(new SearchPostParametersDto());
+        int i = 0;
     }
 }

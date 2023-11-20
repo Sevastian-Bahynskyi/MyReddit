@@ -74,6 +74,7 @@
         ClaimsPrincipal claims = authState.User;
         userEmail = claims.Claims.FirstOrDefault(c => c.Type.Equals("Email"))!.Value;
         post = await postService.GetByIdAsync(PostId);
+        int i = 0;
     }
 
     private async void OnTextFieldChanged()
@@ -81,8 +82,6 @@
         post = await postService.GetByIdAsync(post!.Id);
         StateHasChanged();
     }
-
-    
     
 
 

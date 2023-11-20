@@ -8,9 +8,9 @@ public class Comment : IHasComments
     [Key]
     public int Id { get; set; }
     public int? ReplyToCommentId { get; set; }
-    public List<Comment> Replies { get; set; } = new();
+    public List<Comment> Replies { get; set; }
     public string CommentBody { get; set; }
-    public User Owner { get; init; }
+    public User Owner { get; set; }
     public DateTime CreatedAt { get; set; }
     public PostVotes Votes { get; set; }
     

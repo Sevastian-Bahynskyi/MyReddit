@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Models.Votes;
 
@@ -6,6 +7,7 @@ public class PostVotes
 {
     [Key]
     public int Id { get; set; }
+    [ForeignKey("VoteId")]
     private List<ContentVote> votes;
     public IEnumerable<ContentVote> Votes
     {
